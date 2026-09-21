@@ -1,0 +1,2265 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Allergen Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  --teal-900:#0a3d40;
+  --teal-800:#0f5257;
+  --teal-700:#146a70;
+  --teal-100:#e3f2f1;
+  --amber-500:#f2a93b;
+  --amber-600:#e0921c;
+  --amber-100:#fdf1dd;
+  --coral-600:#d94f4f;
+  --coral-100:#fbe6e6;
+  --ink-900:#132224;
+  --ink-700:#3c5457;
+  --ink-500:#6b8386;
+  --paper-0:#ffffff;
+  --paper-50:#f7faf9;
+  --paper-100:#eef4f3;
+  --line:#dde8e7;
+  --ok-600:#2f8f5b;
+  --ok-100:#e5f5ec;
+  --radius-lg:20px;
+  --radius-md:14px;
+  --radius-sm:9px;
+  --shadow-card:0 2px 10px rgba(10,61,64,.07), 0 1px 2px rgba(10,61,64,.06);
+  --shadow-pop:0 12px 32px rgba(10,61,64,.18);
+  --font-display:'Baloo 2', system-ui, sans-serif;
+  --font-body:'Inter', system-ui, sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper-50);
+  color:var(--ink-900);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+h1,h2,h3,h4{font-family:var(--font-display); margin:0; color:var(--teal-900); line-height:1.15;}
+p{margin:0;}
+button{font-family:inherit; cursor:pointer;}
+input,select,textarea{font-family:inherit;}
+a{color:inherit;}
+:focus-visible{outline:3px solid var(--amber-500); outline-offset:2px;}
+.visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+
+/* App shell */
+#app{min-height:100vh; display:flex; flex-direction:column;}
+
+/* ---------- Top bar (public) ---------- */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 18px; background:var(--teal-900); color:#fff;
+  position:sticky; top:0; z-index:40;
+}
+.topbar .brand{display:flex; align-items:center; gap:10px; cursor:pointer; background:none; border:none; color:#fff; padding:4px;}
+.brand-mark{
+  width:34px; height:34px; border-radius:10px;
+  background:linear-gradient(155deg, var(--amber-500), var(--coral-600));
+  display:flex; align-items:center; justify-content:center; font-size:18px;
+  flex-shrink:0;
+}
+.brand-text{font-family:var(--font-display); font-weight:700; font-size:17px; letter-spacing:.2px;}
+.brand-text small{display:block; font-family:var(--font-body); font-weight:500; font-size:10.5px; opacity:.75; letter-spacing:.4px; text-transform:uppercase; margin-top:1px;}
+.icon-btn{
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.18); color:#fff;
+  width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  font-size:18px; transition:background .15s ease;
+}
+.icon-btn:hover{background:rgba(255,255,255,.22);}
+.topbar-actions{display:flex; gap:8px; align-items:center;}
+.back-pill{
+  display:flex; align-items:center; gap:6px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.18);
+  color:#fff; border-radius:999px; padding:8px 14px 8px 10px; font-size:13.5px; font-weight:600;
+}
+
+main{flex:1; width:100%;}
+.wrap{max-width:1080px; margin:0 auto; padding:20px 18px 60px;}
+.wrap-narrow{max-width:720px; margin:0 auto; padding:20px 18px 60px;}
+
+/* ---------- Landing ---------- */
+.hero{
+  background:radial-gradient(circle at 15% 0%, var(--teal-700), var(--teal-900) 65%);
+  color:#fff; padding:44px 18px 54px; text-align:center; position:relative; overflow:hidden;
+}
+.hero::after{
+  content:""; position:absolute; right:-60px; bottom:-60px; width:220px; height:220px; border-radius:50%;
+  background:radial-gradient(circle, rgba(242,169,59,.35), transparent 70%);
+}
+.hero h1{color:#fff; font-size:clamp(26px,6vw,38px); font-weight:700; margin-bottom:8px;}
+.hero p{color:rgba(255,255,255,.82); font-size:15.5px; max-width:480px; margin:0 auto;}
+.hero .eyebrow{
+  display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.2);
+  padding:6px 14px; border-radius:999px; font-size:12.5px; font-weight:600; letter-spacing:.3px; text-transform:uppercase; margin-bottom:16px;
+}
+.location-grid{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:14px;
+  padding:22px 18px 10px; max-width:1080px; margin:-30px auto 0; position:relative; z-index:5;
+}
+.brand-group-heading{
+  max-width:1080px; margin:24px auto 0; padding:0 18px; font-family:var(--font-display);
+  font-size:15px; font-weight:700; color:var(--ink-900); position:relative; z-index:5;
+}
+.brand-group-heading:first-of-type{margin-top:-10px;}
+.location-card{
+  background:var(--paper-0); border:1px solid var(--line); border-radius:var(--radius-lg);
+  padding:22px 18px; box-shadow:var(--shadow-card); text-align:left;
+  display:flex; align-items:center; gap:14px; transition:transform .15s ease, box-shadow .15s ease;
+}
+.location-card:hover{transform:translateY(-2px); box-shadow:var(--shadow-pop);}
+.location-glyph{
+  width:52px; height:52px; border-radius:14px; flex-shrink:0;
+  background:linear-gradient(155deg, var(--teal-700), var(--teal-900)); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:700; font-family:var(--font-display);
+}
+.location-card h3{font-size:18px; margin-bottom:3px;}
+.location-card span{font-size:13px; color:var(--ink-500);}
+.empty-note{
+  text-align:center; padding:40px 20px; color:var(--ink-500); font-size:14.5px;
+}
+
+/* ---------- Category nav & search ---------- */
+.section-title{display:flex; align-items:center; justify-content:space-between; margin:26px 0 12px;}
+.section-title h2{font-size:20px;}
+.search-bar{
+  display:flex; align-items:center; gap:8px; background:var(--paper-0); border:1.5px solid var(--line);
+  border-radius:999px; padding:10px 16px; margin-top:14px;
+}
+.search-bar input{border:none; outline:none; flex:1; font-size:14.5px; background:transparent; color:var(--ink-900);}
+.search-bar input::placeholder{color:var(--ink-500);}
+.chip-row{display:flex; gap:8px; overflow-x:auto; padding:14px 0 4px; scrollbar-width:none;}
+.chip-row::-webkit-scrollbar{display:none;}
+.chip{
+  flex-shrink:0; padding:9px 16px; border-radius:999px; border:1.5px solid var(--line); background:var(--paper-0);
+  font-size:13.5px; font-weight:600; color:var(--teal-800); white-space:nowrap;
+}
+.chip.active{background:var(--teal-900); border-color:var(--teal-900); color:#fff;}
+
+.filter-btn{
+  display:flex; align-items:center; gap:8px; background:var(--paper-0); border:1.5px solid var(--line);
+  border-radius:999px; padding:10px 16px; font-size:13.5px; font-weight:700; color:var(--teal-900); margin-top:10px;
+  box-shadow:var(--shadow-card);
+}
+.filter-btn .count{background:var(--coral-600); color:#fff; border-radius:999px; font-size:11px; padding:1px 7px; font-weight:700;}
+
+/* Menu grid */
+.category-block{margin-top:30px;}
+.category-block h2{font-size:19px; margin-bottom:12px; padding-left:2px; border-left:4px solid var(--amber-500); padding-left:10px;}
+.item-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:14px;}
+.item-card{
+  background:var(--paper-0); border:1px solid var(--line); border-radius:var(--radius-md); padding:16px;
+  box-shadow:var(--shadow-card); text-align:left; display:flex; flex-direction:column; gap:10px; min-height:100%;
+}
+.item-card h3{font-size:16.5px;}
+.item-card p.desc{font-size:13px; color:var(--ink-700); line-height:1.45;}
+.tag-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:auto;}
+.tag{font-size:11px; font-weight:700; padding:4px 9px; border-radius:999px; letter-spacing:.2px;}
+.tag.warn{background:var(--coral-100); color:var(--coral-600);}
+.tag.may{background:var(--amber-100); color:var(--amber-600);}
+.tag.clear{background:var(--ok-100); color:var(--ok-600);}
+.tag.veg{background:#e5f3df; color:#3f7d2c;}
+.tag.halal{background:#e6f0f5; color:#2b5f7a;}
+.tag.muted{background:var(--paper-100); color:var(--ink-500);}
+
+/* ---------- Item detail ---------- */
+.item-hero{padding:22px 0 6px;}
+.item-hero h1{font-size:26px; margin-bottom:6px;}
+.item-hero p{color:var(--ink-700); font-size:14.5px; line-height:1.5;}
+.item-hero .cat-label{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--teal-700); margin-bottom:8px; display:block;}
+
+.allergen-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:10px; margin-top:14px;}
+.allergen-tile{
+  border-radius:var(--radius-sm); padding:12px 14px; display:flex; align-items:center; gap:10px; border:1.5px solid transparent;
+}
+.allergen-tile.present{background:var(--coral-100); border-color:#f2c2c2;}
+.allergen-tile.may{background:var(--amber-100); border-color:#f4dfae;}
+.allergen-tile.absent{background:var(--paper-100); border-color:var(--line);}
+.allergen-tile .ic{font-size:18px; width:26px; text-align:center; flex-shrink:0;}
+.allergen-tile .lbl{font-weight:700; font-size:13.5px; color:var(--ink-900); display:block;}
+.allergen-tile .status{font-size:10.5px; font-weight:700; letter-spacing:.4px; text-transform:uppercase;}
+.allergen-tile.present .status{color:var(--coral-600);}
+.allergen-tile.may .status{color:var(--amber-600);}
+.allergen-tile.absent .status{color:var(--ink-500);}
+
+.ingredient-list{display:flex; flex-direction:column; gap:10px; margin-top:12px;}
+.ingredient-row{
+  background:var(--paper-0); border:1px solid var(--line); border-radius:var(--radius-md); padding:13px 15px;
+  width:100%; text-align:left; display:flex; align-items:center; gap:10px; cursor:pointer; position:relative;
+  font-family:inherit; transition:border-color .15s, box-shadow .15s;
+}
+.ingredient-row:hover, .ingredient-row:focus-visible{border-color:var(--teal-800); box-shadow:0 0 0 2px var(--teal-100);}
+.ingredient-row .name{font-weight:700; font-size:14.5px; display:block; flex-shrink:0; margin-right:4px;}
+.ingredient-row .mini-tags{display:flex; flex-wrap:wrap; gap:6px; flex:1;}
+.ingredient-row .chev{font-size:20px; color:var(--ink-500); flex-shrink:0; margin-left:auto;}
+.mini-tag{font-size:11px; font-weight:700; background:var(--coral-100); color:var(--coral-600); padding:3px 8px; border-radius:999px;}
+.mini-tag.none{background:var(--ok-100); color:var(--ok-600);}
+.mini-tag.may{background:var(--amber-100); color:var(--amber-600);}
+
+.notes-box{
+  margin-top:16px; background:var(--paper-100); border:1px solid var(--line); border-radius:var(--radius-md);
+  padding:14px 16px; font-size:13.5px; color:var(--ink-700); line-height:1.55;
+}
+.notes-box strong{display:block; font-family:var(--font-display); font-size:12px; text-transform:uppercase; letter-spacing:.4px; margin-bottom:5px; color:var(--ink-900);}
+.cal-pill{display:inline-block; margin-top:8px; background:var(--teal-100); color:var(--teal-800); font-weight:700; font-size:12.5px; padding:5px 12px; border-radius:999px;}
+
+.disclaimer-box{
+  margin-top:22px; background:var(--teal-100); border:1px solid #c7dedb; border-radius:var(--radius-md);
+  padding:15px 16px; font-size:13px; color:var(--teal-900); line-height:1.55;
+}
+.disclaimer-box strong{display:block; margin-bottom:4px; font-size:13.5px;}
+
+/* ---------- Filter drawer ---------- */
+.drawer-overlay{
+  position:fixed; inset:0; background:rgba(10,34,36,.45); z-index:80; display:flex; align-items:flex-end; justify-content:center;
+}
+.drawer{
+  background:var(--paper-0); width:100%; max-width:560px; border-radius:22px 22px 0 0; padding:20px 20px 26px;
+  max-height:86vh; overflow-y:auto; box-shadow:0 -10px 30px rgba(0,0,0,.2);
+}
+.drawer-handle{width:40px; height:4px; background:var(--line); border-radius:99px; margin:0 auto 14px;}
+.drawer h2{font-size:19px; margin-bottom:4px;}
+.drawer .sub{font-size:13px; color:var(--ink-500); margin-bottom:16px;}
+.mode-toggle{display:flex; background:var(--paper-100); border-radius:999px; padding:4px; margin-bottom:16px;}
+.mode-toggle button{flex:1; border:none; background:transparent; padding:9px; border-radius:999px; font-size:13px; font-weight:700; color:var(--ink-700);}
+.mode-toggle button.active{background:var(--teal-900); color:#fff;}
+.allergen-check-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+.allergen-check{
+  display:flex; align-items:center; gap:9px; border:1.5px solid var(--line); border-radius:12px; padding:11px 12px; font-size:13.5px; font-weight:600;
+}
+.allergen-check.checked{border-color:var(--teal-800); background:var(--teal-100);}
+.allergen-check input{width:17px; height:17px; accent-color:var(--teal-800);}
+.drawer-footer{display:flex; gap:10px; margin-top:20px;}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px; border:none; border-radius:12px;
+  padding:12px 18px; font-size:14px; font-weight:700; transition:transform .1s ease, opacity .15s ease;
+}
+.btn:active{transform:scale(.98);}
+.btn-primary{background:var(--teal-900); color:#fff;}
+.btn-primary:hover{background:var(--teal-800);}
+.btn-amber{background:var(--amber-500); color:var(--ink-900);}
+.btn-amber:hover{background:var(--amber-600);}
+.btn-ghost{background:var(--paper-100); color:var(--teal-900);}
+.btn-ghost:hover{background:var(--paper-100); opacity:.8;}
+.btn-danger{background:var(--coral-100); color:var(--coral-600);}
+.btn-outline{background:transparent; border:1.5px solid var(--line); color:var(--ink-900);}
+.btn-block{width:100%;}
+.btn-sm{padding:8px 12px; font-size:12.5px; border-radius:9px;}
+.btn[disabled]{opacity:.45; pointer-events:none;}
+
+/* ============================================================
+   ADMIN / BACK OFFICE
+   ============================================================ */
+.admin-shell{display:flex; min-height:100vh; background:var(--paper-50);}
+.admin-sidebar{
+  width:230px; background:var(--teal-900); color:#fff; flex-shrink:0; display:flex; flex-direction:column; padding:18px 12px;
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+}
+.admin-sidebar .brand-text{color:#fff;}
+.admin-nav{margin-top:24px; display:flex; flex-direction:column; gap:4px; flex:1;}
+.admin-nav button{
+  display:flex; align-items:center; gap:10px; text-align:left; background:none; border:none; color:rgba(255,255,255,.78);
+  padding:11px 12px; border-radius:10px; font-size:13.8px; font-weight:600;
+}
+.admin-nav button.active{background:rgba(255,255,255,.14); color:#fff;}
+.admin-nav button:hover{background:rgba(255,255,255,.08);}
+.admin-nav .ic{width:18px; text-align:center;}
+.admin-exit{margin-top:auto; padding-top:14px; border-top:1px solid rgba(255,255,255,.14);}
+.admin-exit .signed-in-as{font-size:11.5px; color:rgba(255,255,255,.7); padding:0 4px 8px;}
+.admin-exit .signed-in-as strong{color:#fff;}
+.admin-exit button{width:100%; background:rgba(255,255,255,.1); color:#fff; border:none; border-radius:10px; padding:11px; font-size:13px; font-weight:700;}
+.admin-main{flex:1; padding:26px 30px 60px; min-width:0;}
+.admin-topline{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:20px;}
+.admin-topline h1{font-size:23px;}
+.admin-topline .sub{color:var(--ink-500); font-size:13.5px; margin-top:2px;}
+
+.stat-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(170px,1fr)); gap:14px; margin-bottom:26px;}
+.stat-card{
+  background:var(--paper-0); border:1px solid var(--line); border-radius:var(--radius-md); padding:16px 18px; box-shadow:var(--shadow-card);
+}
+.stat-card .num{font-family:var(--font-display); font-size:28px; color:var(--teal-900); font-weight:700;}
+.stat-card .lbl{font-size:12.5px; color:var(--ink-500); font-weight:600; margin-top:2px;}
+.quick-actions{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:8px;}
+
+.panel{background:var(--paper-0); border:1px solid var(--line); border-radius:var(--radius-md); box-shadow:var(--shadow-card); overflow:hidden;}
+.panel-head{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 18px; border-bottom:1px solid var(--line); flex-wrap:wrap;}
+.panel-head h2{font-size:17px;}
+.panel-search{display:flex; align-items:center; gap:8px; background:var(--paper-100); border-radius:999px; padding:8px 14px; min-width:200px;}
+.panel-search input{border:none; background:transparent; outline:none; font-size:13.5px; flex:1;}
+
+table{width:100%; border-collapse:collapse;}
+th{text-align:left; font-size:11.5px; text-transform:uppercase; letter-spacing:.4px; color:var(--ink-500); padding:11px 16px; border-bottom:1px solid var(--line); background:var(--paper-50);}
+td{padding:13px 16px; border-bottom:1px solid var(--line); font-size:13.8px; vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+.row-actions{display:flex; gap:6px; flex-wrap:wrap;}
+.status-pill{font-size:11px; font-weight:700; padding:3px 10px; border-radius:999px;}
+.group-row td{background:var(--paper-100); font-size:12.5px; color:var(--ink-700); padding:8px 14px !important;}
+.status-pill.active{background:var(--ok-100); color:var(--ok-600);}
+.status-pill.inactive{background:var(--paper-100); color:var(--ink-500);}
+.warn-pill{background:var(--coral-100); color:var(--coral-600); font-size:11px; font-weight:700; padding:3px 10px; border-radius:999px;}
+.small-meta{font-size:12px; color:var(--ink-500);}
+.badge-chip{display:inline-block; font-size:11px; font-weight:700; background:var(--teal-100); color:var(--teal-800); padding:3px 9px; border-radius:999px; margin:2px 3px 0 0;}
+.badge-chip.warn{background:var(--coral-100); color:var(--coral-600);}
+.badge-chip.may{background:var(--amber-100); color:var(--amber-600);}
+.badge-chip.cal{background:var(--paper-100); color:var(--ink-700);}
+
+.table-scroll{overflow-x:auto;}
+.empty-row{text-align:center; color:var(--ink-500); padding:36px 16px; font-size:13.5px;}
+
+/* Modal / form */
+.modal-overlay{position:fixed; inset:0; background:rgba(10,34,36,.5); z-index:90; display:flex; align-items:center; justify-content:center; padding:16px; overflow-y:auto;}
+.modal{background:var(--paper-0); width:100%; max-width:560px; border-radius:18px; padding:24px; box-shadow:var(--shadow-pop); max-height:90vh; overflow-y:auto;}
+.modal h2{font-size:19px; margin-bottom:4px;}
+.modal .sub{font-size:13px; color:var(--ink-500); margin-bottom:18px;}
+.field{margin-bottom:16px;}
+.field label{display:block; font-size:12.5px; font-weight:700; color:var(--ink-700); margin-bottom:6px;}
+.field .hint{font-size:11.5px; color:var(--ink-500); margin-top:5px;}
+.field input[type=text], .field input[type=password], .field textarea, .field select{
+  width:100%; border:1.5px solid var(--line); border-radius:10px; padding:10px 12px; font-size:13.8px; color:var(--ink-900); background:var(--paper-0);
+}
+.field textarea{resize:vertical; min-height:64px;}
+.field input:focus, .field textarea:focus, .field select:focus{border-color:var(--teal-700);}
+.checkbox-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+.checkbox-row{display:flex; align-items:center; gap:9px; border:1.5px solid var(--line); border-radius:10px; padding:9px 11px; font-size:13px; font-weight:600;}
+.checkbox-row input{width:16px; height:16px; accent-color:var(--teal-800);}
+.checkbox-row.checked{border-color:var(--teal-800); background:var(--teal-100);}
+
+.allergen-status-list{display:flex; flex-direction:column; gap:6px;}
+.allergen-status-row{display:flex; align-items:center; justify-content:space-between; gap:10px; border:1.5px solid var(--line); border-radius:10px; padding:8px 8px 8px 12px; flex-wrap:wrap;}
+.allergen-status-row .name{font-size:13px; font-weight:600; flex:1 1 150px;}
+.status-toggle{display:flex; gap:2px; background:var(--paper-100); border-radius:999px; padding:3px; flex-shrink:0;}
+.status-toggle input{display:none;}
+.status-toggle label{font-size:11px; font-weight:700; padding:7px 10px; border-radius:999px; color:var(--ink-500);}
+.status-toggle label.sel{background:var(--paper-0); color:var(--ink-900); box-shadow:var(--shadow-card);}
+.status-toggle label.sel-may{color:var(--amber-600);}
+.status-toggle label.sel-contains{color:var(--coral-600);}
+@media (max-width:520px){
+  .status-toggle{width:100%;}
+  .status-toggle label{flex:1; text-align:center;}
+}
+.toggle-row{display:flex; align-items:center; justify-content:space-between; border:1.5px solid var(--line); border-radius:10px; padding:11px 13px;}
+.switch{position:relative; width:42px; height:24px; flex-shrink:0;}
+.switch input{opacity:0; width:0; height:0;}
+.switch .track{position:absolute; inset:0; background:var(--line); border-radius:999px; transition:.15s;}
+.switch .track::before{content:""; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.15s;}
+.switch input:checked + .track{background:var(--ok-600);}
+.switch input:checked + .track::before{transform:translateX(18px);}
+.modal-footer{display:flex; gap:10px; justify-content:flex-end; margin-top:22px; padding-top:16px; border-top:1px solid var(--line);}
+
+.ing-picker{border:1.5px solid var(--line); border-radius:12px; padding:10px; max-height:260px; overflow-y:auto;}
+.ing-picker-row{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 6px; border-bottom:1px solid var(--paper-100);}
+.ing-picker-row:last-child{border-bottom:none;}
+.ing-picker-row .name{font-size:13.5px; font-weight:600;}
+.ing-picker-row .allergen-mini{font-size:11px; color:var(--ink-500); margin-top:2px;}
+.selected-ing-list{display:flex; flex-direction:column; gap:6px; margin-top:10px;}
+.selected-ing-chip{
+  display:flex; align-items:center; justify-content:space-between; background:var(--paper-100); border-radius:10px; padding:8px 10px; font-size:13px; font-weight:600;
+}
+.selected-ing-chip .move-btns{display:flex; gap:4px;}
+.mini-icon-btn{background:var(--paper-0); border:1px solid var(--line); border-radius:6px; width:24px; height:24px; font-size:12px; display:flex; align-items:center; justify-content:center;}
+
+.computed-box{background:var(--teal-100); border-radius:12px; padding:12px 14px; margin-top:10px;}
+.computed-box .title{font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:var(--teal-800); margin-bottom:6px;}
+
+.login-shell{min-height:100vh; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at 20% 10%, var(--teal-700), var(--teal-900) 70%); padding:20px;}
+.login-card{background:var(--paper-0); border-radius:20px; padding:32px 28px; width:100%; max-width:380px; box-shadow:var(--shadow-pop); text-align:center;}
+.login-card .brand-mark{margin:0 auto 14px;}
+.login-card h1{font-size:21px; margin-bottom:6px;}
+.login-card p{color:var(--ink-500); font-size:13.5px; margin-bottom:22px;}
+.login-error{background:var(--coral-100); color:var(--coral-600); border-radius:10px; padding:10px 12px; font-size:12.5px; font-weight:600; margin-bottom:14px; text-align:left;}
+.login-hint{margin-top:16px; font-size:11.5px; color:var(--ink-500); background:var(--paper-100); border-radius:10px; padding:10px 12px; text-align:left; line-height:1.5;}
+
+.toast{
+  position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:var(--ink-900); color:#fff;
+  padding:12px 20px; border-radius:999px; font-size:13.5px; font-weight:600; z-index:200; box-shadow:0 8px 24px rgba(0,0,0,.25);
+  display:flex; align-items:center; gap:8px; opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease;
+}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+.confirm-modal .modal{max-width:400px; text-align:left;}
+
+.settings-card{background:var(--paper-0); border:1px solid var(--line); border-radius:var(--radius-md); padding:20px; box-shadow:var(--shadow-card); margin-bottom:16px;}
+.settings-card h3{font-size:15.5px; margin-bottom:4px;}
+.settings-card .sub{font-size:12.5px; color:var(--ink-500); margin-bottom:14px;}
+.file-drop{border:1.5px dashed var(--line); border-radius:12px; padding:18px; text-align:center; font-size:13px; color:var(--ink-500);}
+
+.no-ing-warn{background:var(--coral-100); color:var(--coral-600); font-size:12px; font-weight:700; padding:8px 12px; border-radius:9px; margin-top:8px;}
+
+@media (max-width: 880px){
+  .admin-shell{flex-direction:column;}
+  .admin-sidebar{width:100%; height:auto; position:sticky; top:0; flex-direction:row; align-items:center; padding:10px 14px; overflow-x:auto; z-index:50;}
+  .admin-sidebar .brand{flex-shrink:0;}
+  .admin-nav{flex-direction:row; margin-top:0; margin-left:14px; overflow-x:auto;}
+  .admin-nav button{white-space:nowrap;}
+  .admin-exit{margin-top:0; margin-left:auto; border-top:none; padding-top:0; flex-shrink:0;}
+  .admin-exit button{padding:9px 12px;}
+  .admin-main{padding:18px 14px 50px;}
+  .checkbox-grid{grid-template-columns:1fr;}
+  .allergen-check-grid{grid-template-columns:1fr;}
+}
+
+/* ---------- Print (item detail allergen sheet) ---------- */
+.print-only{display:none;}
+@media print{
+  .no-print, .topbar, .drawer-overlay, .modal-overlay, #toast, .filter-btn, .chip-row{display:none !important;}
+  body{background:#fff;}
+  .wrap-narrow{max-width:100%; padding:0;}
+  .print-only{display:block;}
+  .print-header{font-family:var(--font-display); font-weight:700; font-size:13px; letter-spacing:.3px; text-transform:uppercase; color:#000; border-bottom:2px solid #000; padding-bottom:8px; margin-bottom:14px;}
+  .item-hero h1{color:#000;}
+  .item-hero p{color:#333;}
+  .allergen-grid{grid-template-columns:repeat(2, 1fr) !important; gap:6px;}
+  .allergen-tile{border:1px solid #999 !important; background:#fff !important; break-inside:avoid;}
+  .allergen-tile.present{border:2px solid #000 !important;}
+  .allergen-tile.may{border:2px dashed #000 !important;}
+  .allergen-tile .lbl, .allergen-tile .status{color:#000 !important;}
+  .ingredient-row{border:1px solid #ccc; break-inside:avoid;}
+  .mini-tag{background:#eee !important; color:#000 !important; border:1px solid #999;}
+  .disclaimer-box{background:#fff; border:1px solid #999; color:#000;}
+  .print-footer{margin-top:16px; font-size:11px; color:#555; border-top:1px solid #ccc; padding-top:8px;}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   1. CONSTANTS
+   ============================================================ */
+var ALLERGENS = [
+  {key:'gluten', label:'Cereals containing gluten', icon:'🌾'},
+  {key:'crustaceans', label:'Crustaceans', icon:'🦐'},
+  {key:'eggs', label:'Eggs', icon:'🥚'},
+  {key:'fish', label:'Fish', icon:'🐟'},
+  {key:'peanuts', label:'Peanuts', icon:'🥜'},
+  {key:'soybeans', label:'Soybeans', icon:'🌱'},
+  {key:'milk', label:'Milk', icon:'🥛'},
+  {key:'nuts', label:'Nuts', icon:'🌰'},
+  {key:'celery', label:'Celery', icon:'🥬'},
+  {key:'mustard', label:'Mustard', icon:'🌭'},
+  {key:'sesame', label:'Sesame', icon:'🫘'},
+  {key:'sulphites', label:'Sulphites', icon:'🍷'},
+  {key:'lupin', label:'Lupin', icon:'🌼'},
+  {key:'molluscs', label:'Molluscs', icon:'🐚'}
+];
+function allergenLabel(key){ for(var i=0;i<ALLERGENS.length;i++){ if(ALLERGENS[i].key===key) return ALLERGENS[i].label; } return key; }
+
+/* Neutral brand mark (shield + check) — deliberately generic so the same
+   system can sit behind any brand or venue without carrying another
+   brand's imagery. */
+var BRAND_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+
+  '<path d="M12 2.5L20 5.5V11C20 16 16.8 19.7 12 21.5C7.2 19.7 4 16 4 11V5.5L12 2.5Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>'+
+  '<path d="M8.5 12L11 14.5L15.8 9.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'+
+'</svg>';
+var APP_TITLE = 'Allergen Guide';
+
+var DISCLAIMER = "Allergen information is provided based on the ingredients and product information available to us. Recipes, ingredients and preparation methods may change. If you have a food allergy or intolerance, please speak to a member of our team before ordering. We cannot guarantee that food is completely free from traces of allergens.";
+
+var STORAGE_KEY = 'vf_allergy_db_v1';
+
+/* ============================================================
+   2. DATA LAYER
+   (Kept deliberately separate from rendering. This is the only
+   part of the app that would need to change if/when this moves
+   from localStorage to a real API / database backend. Every
+   function below returns plain data — nothing here touches the DOM.)
+   ============================================================ */
+function uid(prefix){
+  return prefix + '_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,8);
+}
+
+/* ============================================================
+   DATA LAYER — Supabase (shared, live database)
+   Replaces the earlier localStorage prototype. The anon key below is
+   designed to be public — it's meaningless without the Row Level
+   Security rules set up in the database, which control what it can
+   actually read or write.
+   ============================================================ */
+var SUPABASE_URL = 'https://wapswwplvygtwyoyoyjo.supabase.co';
+var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhcHN3d3BsdnlndHd5b3lveWpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3ODMyOTgsImV4cCI6MjEwNDM1OTI5OH0.j6qRVyGH6mz8oJg7DefCYHIkVAfMOLO2gmPVu2oXnSI';
+var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+var db = { locations:[], categories:[], ingredients:[], menuItems:[], settings:{ admins:[], showCalories:false } };
+var profileNameById = {}; // uuid -> display name/email, for "Updated by" labels
+
+function resolveUpdatedBy(uuid){
+  if(!uuid) return 'Unknown';
+  return profileNameById[uuid] || 'A team member';
+}
+
+/* Maps a raw Supabase row (snake_case) to the shape the rest of the app
+   (written before the backend migration) already expects, so the large
+   majority of render/business logic below needed no changes at all. */
+function mapLocation(r){ return { id:r.id, name:r.name, description:r.description||'', address:r.address||'', brand:r.brand||'', displayOrder:r.display_order||0, active:r.active, updatedBy:resolveUpdatedBy(r.updated_by), updatedAt:r.updated_at }; }
+function mapCategory(r){ return { id:r.id, name:r.name, description:r.description||'', displayOrder:r.display_order, active:r.active, updatedBy:resolveUpdatedBy(r.updated_by), updatedAt:r.updated_at }; }
+function mapIngredient(r){ return { id:r.id, name:r.name, description:r.description||'', allergens:r.allergens||[], mayContain:r.may_contain||[], calories:r.calories, brand:r.brand_name||'', supplier:r.supplier||'', vegetarian:!!r.vegetarian, halal:!!r.halal, active:r.active, updatedBy:resolveUpdatedBy(r.updated_by), updatedAt:r.updated_at }; }
+function mapMenuItem(r, locRows, ingRows){
+  return {
+    id:r.id, name:r.name, description:r.description||'', categoryId:r.category_id, active:r.active,
+    updatedBy:resolveUpdatedBy(r.updated_by), updatedAt:r.updated_at,
+    locationIds: locRows.filter(function(x){ return x.menu_item_id===r.id; }).map(function(x){ return x.location_id; }),
+    ingredientIds: ingRows.filter(function(x){ return x.menu_item_id===r.id; }).sort(function(a,b){ return a.sort_order-b.sort_order; }).map(function(x){ return x.ingredient_id; })
+  };
+}
+function mapProfile(r){ return { id:r.id, username:r.email, displayName:r.display_name||r.email, role:r.role, active:r.active }; }
+
+/* Converts any thrown value to a plain string before it's logged.
+   Some preview/embedding environments relay console output via
+   postMessage, which throws its own confusing error if you hand it a
+   raw object containing non-cloneable things like a fetch Headers
+   instance — so we never log anything but plain text. */
+function safeErrText(e){
+  try{
+    if(!e) return 'Unknown error';
+    if(typeof e === 'string') return e;
+    if(e.message) return String(e.message);
+    return String(e);
+  }catch(_){ return 'Unknown error'; }
+}
+
+var LOAD_ERROR = null;
+
+async function loadAllData(){
+  LOAD_ERROR = null;
+  try{
+    var profRes = await sb.from('profiles').select('*');
+    if(profRes.error) throw profRes.error;
+    profileNameById = {};
+    (profRes.data||[]).forEach(function(p){ profileNameById[p.id] = p.display_name || p.email; });
+
+    var results = await Promise.all([
+      sb.from('locations').select('*'),
+      sb.from('categories').select('*').order('display_order'),
+      sb.from('ingredients').select('*'),
+      sb.from('menu_items').select('*'),
+      sb.from('menu_item_locations').select('*'),
+      sb.from('menu_item_ingredients').select('*'),
+      sb.from('app_settings').select('*').eq('id', true).single()
+    ]);
+    results.forEach(function(r, idx){ if(r.error && idx<6) throw r.error; }); // app_settings missing is non-fatal (older DB before this table existed)
+    var locR=results[0].data||[], catR=results[1].data||[], ingR=results[2].data||[], miR=results[3].data||[], milR=results[4].data||[], mieR=results[5].data||[];
+    var appSettingsRow = results[6] && !results[6].error ? results[6].data : null;
+
+    db.locations = locR.map(mapLocation);
+    db.categories = catR.map(mapCategory);
+    db.ingredients = ingR.map(mapIngredient);
+    db.menuItems = miR.map(function(r){ return mapMenuItem(r, milR, mieR); });
+    db.settings.admins = (profRes.data||[]).map(mapProfile);
+    db.settings.showCalories = appSettingsRow ? !!appSettingsRow.show_calories : false;
+  }catch(e){
+    console.error('Supabase load failed: ' + safeErrText(e));
+    LOAD_ERROR = (e && e.message) ? e.message : 'Could not reach the database.';
+  }
+}
+
+/* ---- Generic Supabase write helpers, used by every entity's form below ---- */
+async function sbInsert(table, row){
+  var res = await sb.from(table).insert(row).select().single();
+  if(res.error) throw res.error;
+  return res.data;
+}
+async function sbUpdate(table, id, row){
+  var res = await sb.from(table).update(row).eq('id', id).select().single();
+  if(res.error) throw res.error;
+  return res.data;
+}
+async function sbDelete(table, id){
+  var res = await sb.from(table).delete().eq('id', id);
+  if(res.error) throw res.error;
+}
+/* Wraps an async form-submit/delete handler: shows a clear toast on
+   failure instead of silently doing nothing, and never lets a failed
+   write pretend to have succeeded in the UI. */
+function withBusy(fn){
+  var p = fn();
+  if(p && p.catch){
+    p.catch(function(e){ console.error('Action failed: ' + safeErrText(e)); toast((e && e.message) ? e.message : 'Something went wrong \u2014 please try again.'); });
+  }
+  return p;
+}
+
+function stamp(data){
+  data.updated_by = state.admin.currentUserId || null;
+  data.updated_at = new Date().toISOString();
+  return data;
+}
+/* ---- Login convenience (NOT security) ----
+   Remembers the last email typed, purely so staff don't have to retype
+   it every time. Never stores the password — that's handled entirely
+   by Supabase Auth now. */
+var ADMIN_EMAIL_KEY = 'vf_allergy_last_admin_email';
+function getLastAdminEmail(){
+  try{ return localStorage.getItem(ADMIN_EMAIL_KEY) || ''; }catch(e){ return ''; }
+}
+function setLastAdminEmail(email){
+  try{ localStorage.setItem(ADMIN_EMAIL_KEY, email); }catch(e){}
+}
+function formatUpdated(record){
+  if(!record || !record.updatedAt) return '';
+  var d = new Date(record.updatedAt);
+  var dateStr = isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+  return 'Updated by '+esc(record.updatedBy||'Unknown')+(dateStr?' · '+dateStr:'');
+}
+
+/* ---- calculation: single source of truth is the ingredient ----
+   Returns {contains:[...], mayContain:[...]}.
+   If ANY connected ingredient definitely contains an allergen, the menu
+   item is marked "Contains" for that allergen — that always wins.
+   If no ingredient definitely contains it, but at least one connected
+   ingredient "may contain" it, the menu item is marked "May Contain". */
+function getMenuItemAllergens(menuItem, db){
+  var containsSet = {}, maySet = {};
+  (menuItem.ingredientIds||[]).forEach(function(iid){
+    var ing = db.ingredients.find(function(i){ return i.id===iid; });
+    if(!ing) return;
+    (ing.allergens||[]).forEach(function(a){ containsSet[a]=true; });
+    (ing.mayContain||[]).forEach(function(a){ maySet[a]=true; });
+  });
+  var contains = Object.keys(containsSet);
+  var mayContain = Object.keys(maySet).filter(function(a){ return !containsSet[a]; });
+  return { contains: contains, mayContain: mayContain };
+}
+/* Convenience: every allergen key touched (contains OR may contain) —
+   used wherever we need to treat "may contain" as a risk too. */
+function getMenuItemAtRiskAllergens(menuItem, db){
+  var ai = getMenuItemAllergens(menuItem, db);
+  return ai.contains.concat(ai.mayContain);
+}
+
+/* ---- calorie calculation ----
+   Calories are a background/staff-only field until Settings > "Show
+   calories to customers" is switched on. Even then, we only ever show a
+   total to a customer once every connected ingredient has a value —
+   a partial total would be misleading, not just incomplete. */
+function getMenuItemCalories(menuItem, db){
+  var ids = menuItem.ingredientIds || [];
+  var total = 0, missing = 0, found = 0;
+  ids.forEach(function(iid){
+    var ing = db.ingredients.find(function(i){ return i.id===iid; });
+    if(!ing) return;
+    found++;
+    if(typeof ing.calories === 'number' && !isNaN(ing.calories)){ total += ing.calories; }
+    else { missing++; }
+  });
+  return { total: total, ingredientCount: found, missingCount: missing, complete: found>0 && missing===0 };
+}
+
+/* ---- dietary suitability calculation ----
+   Unlike allergens (where ONE ingredient having something is enough to
+   flag the whole dish), vegetarian/halal work the other way round — a
+   dish is only vegetarian if EVERY ingredient in it is, and the same for
+   halal. An item with no ingredients connected is treated as unknown,
+   not suitable, since there's nothing to base the claim on. */
+function getMenuItemDietary(menuItem, db){
+  var ids = menuItem.ingredientIds || [];
+  var ings = ids.map(function(iid){ return db.ingredients.find(function(i){ return i.id===iid; }); }).filter(Boolean);
+  if(!ings.length) return { vegetarian:false, halal:false };
+  return {
+    vegetarian: ings.every(function(i){ return !!i.vegetarian; }),
+    halal: ings.every(function(i){ return !!i.halal; })
+  };
+}
+
+/* ---- location brand grouping ----
+   Groups locations by their (optional) brand, each group internally
+   sorted by displayOrder. Groups themselves are sorted alphabetically by
+   brand name, with unbranded locations trailing last as "Locations". */
+function groupLocationsByBrand(locs){
+  var groups = {};
+  var order = [];
+  locs.forEach(function(l){
+    var key = (l.brand||'').trim();
+    if(!groups[key]){ groups[key] = []; order.push(key); }
+    groups[key].push(l);
+  });
+  order.sort(function(a,b){
+    if(!a && b) return 1;   // unbranded last
+    if(a && !b) return -1;
+    return a.localeCompare(b);
+  });
+  return order.map(function(key){
+    return {
+      brand: key || null,
+      locations: groups[key].slice().sort(function(a,b){ return a.displayOrder-b.displayOrder; })
+    };
+  });
+}
+
+/* ============================================================
+   3. APP STATE
+   ============================================================ */
+var state = {
+  screen: 'landing',        // landing | menu | item | ingredient
+  locationId: null,
+  categoryFilter: 'all',
+  allergenFilterOpen: false,
+  allergenFilterMode: 'exclude', // 'exclude' = does NOT contain, 'include' = contains
+  allergenFilterSelected: [],
+  dietaryFilter: { vegetarian:false, halal:false },
+  menuItemId: null,
+  ingredientId: null,
+  admin: {
+    loggedIn: false,
+    screen: 'dashboard',   // dashboard|locations|categories|ingredients|menuitems|team|settings
+    search: '',
+    loginError: '',
+    currentUser: '',
+    currentUserId: '',
+    currentUserRole: ''
+  },
+  modal: null,   // {type, payload}
+  confirm: null  // {message, onConfirm}
+};
+
+function go(patch){ Object.assign(state, patch); render(); window.scrollTo(0,0); }
+function setModal(m){ state.modal = m; render(); }
+function closeModal(){ state.modal = null; render(); }
+
+function toast(msg){
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 2200);
+}
+
+function confirmAction(message, onConfirm){
+  state.confirm = {message:message, onConfirm:onConfirm};
+  render();
+}
+
+/* ============================================================
+   4. RENDER HELPERS
+   ============================================================ */
+function el(html){
+  var t = document.createElement('template');
+  t.innerHTML = html.trim();
+  return t.content.firstChild;
+}
+function esc(s){
+  if(s===undefined||s===null) return '';
+  return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
+}
+
+/* Viewer accounts have no admin dashboard to go to (see_admin gating below),
+   so once logged in their only path back is to log out — the gear icon
+   becomes a log-out button for them instead of a link to the login screen. */
+function topbarGearButton(){
+  if(state.admin.loggedIn && state.admin.currentUserRole==='viewer'){
+    return '<button class="icon-btn" id="viewerLogout" title="Log out" aria-label="Log out">🔓</button>';
+  }
+  return '<button class="icon-btn" id="openAdmin" title="Back office" aria-label="Back office login">⚙️</button>';
+}
+
+/* ============================================================
+   5. PUBLIC: LANDING
+   ============================================================ */
+function renderLanding(){
+  var activeLocs = db.locations.filter(function(l){ return l.active; });
+  var groups = groupLocationsByBrand(activeLocs);
+  function cardHtml(l){
+    return '<button class="location-card" data-landloc="'+l.id+'">'+
+      '<div class="location-glyph">'+esc(l.name.charAt(0))+'</div>'+
+      '<div><h3>'+esc(l.name)+'</h3><span>'+esc(l.address||'Tap to view menu')+'</span></div>'+
+    '</button>';
+  }
+  var showHeadings = groups.length > 1;
+  var groupsHtml = groups.map(function(g){
+    var heading = showHeadings ? '<h2 class="brand-group-heading">'+esc(g.brand||'Other locations')+'</h2>' : '';
+    return heading + '<div class="location-grid">'+g.locations.map(cardHtml).join('')+'</div>';
+  }).join('');
+  var content = ''+
+    '<div class="hero">'+
+      '<div class="eyebrow">Allergy &amp; Ingredient Guide</div>'+
+      '<h1>Where are you visiting?</h1>'+
+      '<p>Pick your location to see the menu and full allergen information.</p>'+
+    '</div>'+
+    (groupsHtml || '<div class="location-grid"><div class="empty-note">No locations are available right now. Please ask a team member for help.</div></div>')+
+    '<div class="wrap-narrow"><div class="disclaimer-box"><strong>Please note</strong>'+esc(DISCLAIMER)+'</div></div>';
+
+  return '<div class="topbar">'+
+      '<button class="brand" id="brandHome"><div class="brand-mark">'+BRAND_SVG+'</div><div class="brand-text">'+esc(APP_TITLE)+'</div></button>'+
+      topbarGearButton()+
+    '</div>'+
+    '<main>'+content+'</main>';
+}
+
+/* ============================================================
+   6. PUBLIC: MENU
+   ============================================================ */
+function itemMatchesAllergenFilter(item){
+  if(state.allergenFilterSelected.length===0) return true;
+  var ai = getMenuItemAllergens(item, db);
+  if(state.allergenFilterMode==='exclude'){
+    /* "Does NOT contain" is a safety filter — an item that "may contain"
+       a selected allergen is excluded too, not just a confirmed "contains". */
+    var atRisk = ai.contains.concat(ai.mayContain);
+    return !state.allergenFilterSelected.some(function(a){ return atRisk.indexOf(a)!==-1; });
+  } else {
+    /* "Does contain" only matches a confirmed Contains, not a May Contain. */
+    return state.allergenFilterSelected.every(function(a){ return ai.contains.indexOf(a)!==-1; });
+  }
+}
+
+function itemMatchesDietaryFilter(item){
+  var f = state.dietaryFilter;
+  if(!f.vegetarian && !f.halal) return true;
+  var d = getMenuItemDietary(item, db);
+  if(f.vegetarian && !d.vegetarian) return false;
+  if(f.halal && !d.halal) return false;
+  return true;
+}
+
+function renderMenu(){
+  var loc = db.locations.find(function(l){ return l.id===state.locationId; });
+  if(!loc){ go({screen:'landing'}); return ''; }
+
+  var allItems = db.menuItems.filter(function(m){ return m.active && m.locationIds.indexOf(loc.id)!==-1; });
+  var filtered = allItems.filter(function(m){
+    if(state.categoryFilter!=='all' && m.categoryId!==state.categoryFilter && !(state.categoryFilter==='uncategorised' && !m.categoryId)) return false;
+    return itemMatchesAllergenFilter(m) && itemMatchesDietaryFilter(m);
+  });
+
+  var usedCatIds = {};
+  allItems.forEach(function(m){ usedCatIds[m.categoryId || 'uncategorised']=true; });
+  var cats = db.categories.filter(function(c){ return c.active && usedCatIds[c.id]; }).sort(function(a,b){ return a.displayOrder-b.displayOrder; });
+
+  var chipRow = '<div class="chip-row">'+
+    '<button class="chip '+(state.categoryFilter==='all'?'active':'')+'" data-cat="all">All</button>'+
+    cats.map(function(c){ return '<button class="chip '+(state.categoryFilter===c.id?'active':'')+'" data-cat="'+c.id+'">'+esc(c.name)+'</button>'; }).join('')+
+    (usedCatIds['uncategorised'] ? '<button class="chip '+(state.categoryFilter==='uncategorised'?'active':'')+'" data-cat="uncategorised">Uncategorised</button>' : '')+
+  '</div>';
+
+  var grouped = '';
+  if(state.categoryFilter==='all'){
+    var groups = cats.map(function(c){ return {id:c.id, name:c.name}; });
+    if(usedCatIds['uncategorised']) groups.push({id:'uncategorised', name:'Uncategorised'});
+    groups.forEach(function(g){
+      var groupItems = filtered.filter(function(m){ return (m.categoryId||'uncategorised')===g.id; });
+      if(groupItems.length===0) return;
+      grouped += '<div class="category-block"><h2>'+esc(g.name)+'</h2><div class="item-grid">'+groupItems.map(renderItemCard).join('')+'</div></div>';
+    });
+  } else {
+    grouped = '<div class="category-block"><div class="item-grid">'+filtered.map(renderItemCard).join('')+'</div></div>';
+  }
+  if(filtered.length===0){
+    grouped = '<div class="empty-note">No menu items match your search or filter.<br>Try adjusting the allergen filter above.</div>';
+  }
+
+  var filterCount = state.allergenFilterSelected.length + (state.dietaryFilter.vegetarian?1:0) + (state.dietaryFilter.halal?1:0);
+
+  return '<div class="topbar">'+
+      '<button class="back-pill" id="backToLanding">← <span>Locations</span></button>'+
+      '<div class="topbar-actions">'+topbarGearButton()+'</div>'+
+    '</div>'+
+    '<main><div class="wrap">'+
+      '<div class="section-title"><h2>'+esc(loc.name)+'</h2></div>'+
+      chipRow+
+      '<button class="filter-btn" id="openFilter">🧪 Filter by allergen &amp; diet '+(filterCount>0?'<span class="count">'+filterCount+'</span>':'')+'</button>'+
+      grouped+
+      '<div class="disclaimer-box" style="margin-top:34px;"><strong>Please note</strong>'+esc(DISCLAIMER)+'</div>'+
+    '</div></main>'+
+    (state.allergenFilterOpen ? renderFilterDrawer() : '');
+}
+
+function renderItemCard(m){
+  var ai = getMenuItemAllergens(m, db);
+  var diet = getMenuItemDietary(m, db);
+  var total = ai.contains.length + ai.mayContain.length;
+  var shown = ai.contains.slice(0,4).map(function(a){ return '<span class="tag warn">'+esc(allergenLabel(a))+'</span>'; });
+  if(shown.length<4){ shown = shown.concat(ai.mayContain.slice(0,4-shown.length).map(function(a){ return '<span class="tag may">May contain '+esc(allergenLabel(a))+'</span>'; })); }
+  var tags = total
+    ? shown.join('') + (total>4 ? '<span class="tag muted">+'+(total-4)+' more</span>' : '')
+    : '<span class="tag clear">No listed allergens</span>';
+  var dietBadges = (diet.vegetarian?'<span class="tag veg">🌱 Vegetarian</span>':'')+(diet.halal?'<span class="tag halal">☾ Halal</span>':'');
+  return '<button class="item-card" data-item="'+m.id+'">'+
+    '<h3>'+esc(m.name)+'</h3>'+
+    (m.description ? '<p class="desc">'+esc(m.description)+'</p>' : '')+
+    (dietBadges ? '<div class="tag-row" style="margin-bottom:6px;">'+dietBadges+'</div>' : '')+
+    '<div class="tag-row">'+tags+'</div>'+
+  '</button>';
+}
+
+function renderFilterDrawer(){
+  var mode = state.allergenFilterMode;
+  var selected = state.allergenFilterSelected;
+  var checks = ALLERGENS.map(function(a){
+    var checked = selected.indexOf(a.key)!==-1;
+    return '<label class="allergen-check '+(checked?'checked':'')+'"><input type="checkbox" data-allergen="'+a.key+'" '+(checked?'checked':'')+'> '+a.icon+' '+esc(a.label)+'</label>';
+  }).join('');
+  var logicLine = selected.length
+    ? (mode==='exclude'
+        ? 'Showing items that do <strong>not</strong> contain, and are not listed as "may contain": '+selected.map(allergenLabel).join(', ')
+        : 'Showing items that contain: '+selected.map(allergenLabel).join(', '))
+    : 'Select one or more allergens below.';
+  return '<div class="drawer-overlay" id="filterOverlay"><div class="drawer">'+
+    '<div class="drawer-handle"></div>'+
+    '<h2>Filter by allergen &amp; diet</h2>'+
+    '<div class="section-title" style="margin-top:0;"><h2>Dietary</h2></div>'+
+    '<div class="allergen-check-grid" style="margin-bottom:18px;">'+
+      '<label class="allergen-check '+(state.dietaryFilter.vegetarian?'checked':'')+'"><input type="checkbox" data-dietary="vegetarian" '+(state.dietaryFilter.vegetarian?'checked':'')+'> 🌱 Vegetarian</label>'+
+      '<label class="allergen-check '+(state.dietaryFilter.halal?'checked':'')+'"><input type="checkbox" data-dietary="halal" '+(state.dietaryFilter.halal?'checked':'')+'> ☾ Halal friendly</label>'+
+    '</div>'+
+    '<div class="section-title" style="margin-top:0;"><h2>Allergens</h2></div>'+
+    '<p class="sub">'+logicLine+'</p>'+
+    '<div class="mode-toggle">'+
+      '<button data-mode="exclude" class="'+(mode==='exclude'?'active':'')+'">Does NOT contain</button>'+
+      '<button data-mode="include" class="'+(mode==='include'?'active':'')+'">Does contain</button>'+
+    '</div>'+
+    '<div class="allergen-check-grid">'+checks+'</div>'+
+    '<div class="disclaimer-box" style="margin-top:16px;"><strong>Important</strong>"Does NOT contain" also hides items marked "May Contain" for that allergen, as a precaution. An item not being listed does not guarantee it is safe — please always speak to our team before ordering if you have an allergy.</div>'+
+    '<div class="drawer-footer">'+
+      '<button class="btn btn-ghost btn-block" id="clearFilter">Clear all</button>'+
+      '<button class="btn btn-primary btn-block" id="applyFilter">Show results</button>'+
+    '</div>'+
+  '</div></div>';
+}
+
+/* ============================================================
+   7. PUBLIC: ITEM DETAIL
+   ============================================================ */
+function renderItemDetail(){
+  var item = db.menuItems.find(function(m){ return m.id===state.menuItemId; });
+  if(!item){ go({screen:'menu'}); return ''; }
+  var cat = db.categories.find(function(c){ return c.id===item.categoryId; });
+  var ai = getMenuItemAllergens(item, db);
+  var cal = getMenuItemCalories(item, db);
+  var diet = getMenuItemDietary(item, db);
+  var showCalToCustomers = db.settings.showCalories && cal.complete;
+
+  var tiles = ALLERGENS.map(function(a){
+    var status = ai.contains.indexOf(a.key)!==-1 ? 'present' : (ai.mayContain.indexOf(a.key)!==-1 ? 'may' : 'absent');
+    var statusText = status==='present' ? 'Contains' : (status==='may' ? 'May Contain' : 'No listed allergen');
+    return '<div class="allergen-tile '+status+'">'+
+      '<span class="ic">'+a.icon+'</span>'+
+      '<span><span class="lbl">'+esc(a.label)+'</span><span class="status">'+statusText+'</span></span>'+
+    '</div>';
+  }).join('');
+
+  var ingredientRows = (item.ingredientIds||[]).map(function(iid){
+    var ing = db.ingredients.find(function(i){ return i.id===iid; });
+    if(!ing) return '';
+    var contains = ing.allergens||[], may = ing.mayContain||[];
+    var tagsHtml = '';
+    tagsHtml += contains.map(function(k){ return '<span class="mini-tag">'+esc(allergenLabel(k))+'</span>'; }).join('');
+    tagsHtml += may.map(function(k){ return '<span class="mini-tag may">May contain '+esc(allergenLabel(k))+'</span>'; }).join('');
+    if(!contains.length && !may.length) tagsHtml = '<span class="mini-tag none">No listed allergens</span>';
+    return '<button type="button" class="ingredient-row" data-open-ing="'+ing.id+'"><span class="name">'+esc(ing.name)+'</span><div class="mini-tags">'+tagsHtml+'</div><span class="chev">›</span></button>';
+  }).join('');
+
+  var loc = db.locations.find(function(l){ return l.id===state.locationId; });
+  var showPrint = state.admin.loggedIn; // staff-only — customers never see the print option
+
+  return '<div class="topbar no-print">'+
+      '<button class="back-pill" id="backToMenu">← <span>Menu</span></button>'+
+      '<div class="topbar-actions">'+(showPrint?'<button class="icon-btn" id="printItem" title="Print this page" aria-label="Print allergen information">🖨️</button>':'')+topbarGearButton()+'</div>'+
+    '</div>'+
+    '<main><div class="wrap-narrow">'+
+      '<div class="print-only print-header">'+esc(APP_TITLE)+(loc?' · '+esc(loc.name):'')+'</div>'+
+      '<div class="item-hero">'+
+        (cat ? '<span class="cat-label">'+esc(cat.name)+'</span>' : '')+
+        '<h1>'+esc(item.name)+'</h1>'+
+        (item.description ? '<p>'+esc(item.description)+'</p>' : '')+
+        (diet.vegetarian?'<span class="tag veg" style="margin-right:6px;">🌱 Vegetarian</span>':'')+(diet.halal?'<span class="tag halal">☾ Halal friendly</span>':'')+
+        (showCalToCustomers ? '<span class="cal-pill">~'+cal.total+' kcal</span>' : '')+
+      '</div>'+
+      (showPrint?'<button class="btn btn-outline btn-sm no-print" id="printItem2" style="margin-top:4px;">🖨️ Print this page (staff only)</button>':'')+
+      '<div class="section-title"><h2>Allergen summary</h2></div>'+
+      '<div class="allergen-grid">'+tiles+'</div>'+
+      '<div class="section-title"><h2>Ingredients</h2><span class="small-meta">Tap an ingredient for details</span></div>'+
+      '<div class="ingredient-list">'+(ingredientRows || '<p class="small-meta">No ingredients recorded for this item yet.</p>')+'</div>'+
+      '<div class="disclaimer-box"><strong>Please note</strong>'+esc(DISCLAIMER)+'</div>'+
+      '<div class="print-only print-footer">Printed from the '+esc(APP_TITLE)+(loc?' — '+esc(loc.name):'')+' on '+esc(new Date().toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'}))+'. Always confirm with a team member before ordering.</div>'+
+    '</div></main>';
+}
+
+/* ============================================================
+   7b. PUBLIC: INGREDIENT DETAIL (sub-page)
+   ============================================================ */
+function renderIngredientDetail(){
+  var ing = db.ingredients.find(function(i){ return i.id===state.ingredientId; });
+  if(!ing){ go({screen:'item'}); return ''; }
+  var contains = ing.allergens||[], may = ing.mayContain||[];
+  var showCal = db.settings.showCalories && typeof ing.calories==='number' && !isNaN(ing.calories);
+
+  var tiles = ALLERGENS.map(function(a){
+    var status = contains.indexOf(a.key)!==-1 ? 'present' : (may.indexOf(a.key)!==-1 ? 'may' : 'absent');
+    var statusText = status==='present' ? 'Contains' : (status==='may' ? 'May Contain' : 'No listed allergen');
+    return '<div class="allergen-tile '+status+'">'+
+      '<span class="ic">'+a.icon+'</span>'+
+      '<span><span class="lbl">'+esc(a.label)+'</span><span class="status">'+statusText+'</span></span>'+
+    '</div>';
+  }).join('');
+
+  var showPrint = state.admin.loggedIn; // staff-only — customers never see the print option
+
+  return '<div class="topbar no-print">'+
+      '<button class="back-pill" id="backToItem">← <span>Back</span></button>'+
+      '<div class="topbar-actions">'+(showPrint?'<button class="icon-btn" id="printIng" title="Print this page" aria-label="Print allergen information">🖨️</button>':'')+topbarGearButton()+'</div>'+
+    '</div>'+
+    '<main><div class="wrap-narrow">'+
+      '<div class="item-hero">'+
+        '<span class="cat-label">Ingredient</span>'+
+        '<h1>'+esc(ing.name)+'</h1>'+
+        (ing.vegetarian?'<span class="tag veg" style="margin-right:6px;">🌱 Vegetarian</span>':'')+(ing.halal?'<span class="tag halal">☾ Halal friendly</span>':'')+
+        (showCal ? '<span class="cal-pill">~'+ing.calories+' kcal</span>' : '')+
+      '</div>'+
+      (showPrint?'<button class="btn btn-outline btn-sm no-print" id="printIng2" style="margin-top:4px;">🖨️ Print this page (staff only)</button>':'')+
+      (ing.description ? '<div class="notes-box"><strong>Notes</strong>'+esc(ing.description)+'</div>' : '')+
+      '<div class="section-title"><h2>Allergen summary</h2></div>'+
+      '<div class="allergen-grid">'+tiles+'</div>'+
+      '<div class="disclaimer-box"><strong>Please note</strong>'+esc(DISCLAIMER)+'</div>'+
+    '</div></main>';
+}
+
+/* ============================================================
+   8. ADMIN: LOGIN
+   ============================================================ */
+function renderAdminLogin(){
+  var lastEmail = getLastAdminEmail();
+  return '<div class="login-shell"><div class="login-card">'+
+    '<div class="brand-mark" style="margin:0 auto 14px;">'+BRAND_SVG+'</div>'+
+    '<h1>Back office</h1>'+
+    '<p>Sign in to manage locations, menus and allergens.</p>'+
+    (state.admin.loginError ? '<div class="login-error">'+esc(state.admin.loginError)+'</div>' : '')+
+    '<div id="loginForm">'+
+      '<div class="field" style="text-align:left;"><label for="authEmail">Email</label><input type="email" id="authEmail" autocomplete="username" placeholder="you@yourbusiness.com" value="'+esc(lastEmail)+'"></div>'+
+      '<div class="field" style="text-align:left;"><label for="authPassword">Password</label><input type="password" id="authPassword" autocomplete="current-password" placeholder="Password"></div>'+
+      '<button type="button" id="loginSubmitBtn" class="btn btn-primary btn-block">Log in</button>'+
+    '</div>'+
+    '<button class="btn btn-ghost btn-block" id="cancelLogin" style="margin-top:10px;">Back to public menu</button>'+
+  '</div></div>';
+}
+
+/* ============================================================
+   9. ADMIN: SHELL + DASHBOARD
+   ============================================================ */
+var ADMIN_NAV = [
+  {key:'dashboard', label:'Dashboard', ic:'🏠'},
+  {key:'locations', label:'Locations', ic:'📍'},
+  {key:'categories', label:'Categories', ic:'🗂️'},
+  {key:'ingredients', label:'Ingredients', ic:'🧾'},
+  {key:'menuitems', label:'Menu items', ic:'🍔'},
+  {key:'team', label:'Team', ic:'👤', masterOnly:true},
+  {key:'settings', label:'Settings', ic:'⚙️'}
+];
+
+function renderAdminShell(innerHtml){
+  var isMaster = state.admin.currentUserRole==='master';
+  var navItems = ADMIN_NAV.filter(function(n){ return !n.masterOnly || isMaster; });
+  var nav = navItems.map(function(n){
+    return '<button class="'+(state.admin.screen===n.key?'active':'')+'" data-adminnav="'+n.key+'"><span class="ic">'+n.ic+'</span> '+n.label+'</button>';
+  }).join('');
+  return '<div class="admin-shell">'+
+    '<div class="admin-sidebar">'+
+      '<button class="brand" id="brandHomeAdmin" style="justify-content:flex-start;"><div class="brand-mark">'+BRAND_SVG+'</div><div class="brand-text">'+esc(APP_TITLE)+'<small>Back office</small></div></button>'+
+      '<div class="admin-nav">'+nav+'</div>'+
+      '<div class="admin-exit"><div class="signed-in-as">Signed in as <strong>'+esc(state.admin.currentUser||'')+'</strong>'+(isMaster?'':' <span class="small-meta">(staff)</span>')+'</div><button id="viewPublic">View public site ↗</button><button id="logoutAdmin" style="margin-top:6px;">Log out</button></div>'+
+    '</div>'+
+    '<div class="admin-main">'+innerHtml+'</div>'+
+  '</div>';
+}
+
+function renderAdminDashboard(){
+  var activeLocs = db.locations.filter(function(l){ return l.active; }).length;
+  var activeCats = db.categories.filter(function(c){ return c.active; }).length;
+  var activeIngs = db.ingredients.filter(function(i){ return i.active; }).length;
+  var activeItems = db.menuItems.filter(function(m){ return m.active; }).length;
+
+  var noIngWarnings = db.menuItems.filter(function(m){ return m.active && (!m.ingredientIds || m.ingredientIds.length===0); });
+  var noLocWarnings = db.menuItems.filter(function(m){ return m.active && (!m.locationIds || m.locationIds.filter(function(lid){ var l=db.locations.find(function(x){return x.id===lid;}); return l&&l.active; }).length===0); });
+
+  var warnBlock = '';
+  if(noIngWarnings.length || noLocWarnings.length){
+    warnBlock = '<div class="panel" style="margin-bottom:22px;"><div class="panel-head"><h2>⚠️ Needs attention</h2></div><div style="padding:14px 18px;">'+
+      (noIngWarnings.length ? '<p style="margin-bottom:8px; font-size:13.5px;"><strong>'+noIngWarnings.length+'</strong> menu item(s) have no ingredients connected: '+noIngWarnings.map(function(m){return esc(m.name);}).join(', ')+'</p>' : '')+
+      (noLocWarnings.length ? '<p style="font-size:13.5px;"><strong>'+noLocWarnings.length+'</strong> menu item(s) have no active locations assigned: '+noLocWarnings.map(function(m){return esc(m.name);}).join(', ')+'</p>' : '')+
+    '</div></div>';
+  }
+
+  var inner = '<div class="admin-topline"><div><h1>Dashboard</h1><div class="sub">Overview of your allergy management data.</div></div></div>'+
+    '<div class="stat-grid">'+
+      '<div class="stat-card"><div class="num">'+activeLocs+'</div><div class="lbl">Active locations</div></div>'+
+      '<div class="stat-card"><div class="num">'+activeCats+'</div><div class="lbl">Active categories</div></div>'+
+      '<div class="stat-card"><div class="num">'+activeIngs+'</div><div class="lbl">Ingredients</div></div>'+
+      '<div class="stat-card"><div class="num">'+activeItems+'</div><div class="lbl">Menu items</div></div>'+
+    '</div>'+
+    warnBlock+
+    '<div class="section-title" style="margin-top:0;"><h2>Quick actions</h2></div>'+
+    '<div class="quick-actions">'+
+      '<button class="btn btn-amber" data-quickadd="location">+ Add location</button>'+
+      '<button class="btn btn-amber" data-quickadd="category">+ Add category</button>'+
+      '<button class="btn btn-amber" data-quickadd="ingredient">+ Add ingredient</button>'+
+      '<button class="btn btn-amber" data-quickadd="menuitem">+ Add menu item</button>'+
+    '</div>';
+  return renderAdminShell(inner);
+}
+
+/* ============================================================
+   10. ADMIN: LOCATIONS
+   ============================================================ */
+function renderAdminLocations(){
+  var term = state.admin.search.trim().toLowerCase();
+  var filtered = db.locations.filter(function(l){ return !term || l.name.toLowerCase().indexOf(term)!==-1 || (l.brand||'').toLowerCase().indexOf(term)!==-1; });
+  var groups = groupLocationsByBrand(filtered);
+  var rows = '';
+  groups.forEach(function(g){
+    if(groups.length>1){
+      rows += '<tr class="group-row"><td colspan="5"><strong>'+esc(g.brand||'Other locations')+'</strong></td></tr>';
+    }
+    g.locations.forEach(function(l, idx){
+      var itemCount = db.menuItems.filter(function(m){ return m.locationIds.indexOf(l.id)!==-1; }).length;
+      var updatedLine = formatUpdated(l);
+      rows += '<tr><td><strong>'+esc(l.name)+'</strong>'+(l.address?'<div class="small-meta">'+esc(l.address)+'</div>':'')+(updatedLine?'<div class="small-meta">'+updatedLine+'</div>':'')+'</td>'+
+        '<td class="small-meta">'+(l.brand||'—')+'</td>'+
+        '<td class="small-meta">'+itemCount+' menu item(s)</td>'+
+        '<td><span class="status-pill '+(l.active?'active':'inactive')+'">'+(l.active?'Active':'Inactive')+'</span></td>'+
+        '<td><div class="row-actions">'+
+          '<button class="mini-icon-btn" data-move-loc="up:'+l.id+'" title="Move up">↑</button>'+
+          '<button class="mini-icon-btn" data-move-loc="down:'+l.id+'" title="Move down">↓</button>'+
+          '<button class="btn btn-outline btn-sm" data-edit-loc="'+l.id+'">Edit</button>'+
+          '<button class="btn btn-ghost btn-sm" data-toggle-loc="'+l.id+'">'+(l.active?'Deactivate':'Activate')+'</button>'+
+          '<button class="btn btn-danger btn-sm" data-delete-loc="'+l.id+'">Delete</button>'+
+        '</div></td></tr>';
+    });
+  });
+  var inner = adminPanel('Locations', 'Manage the venues customers can select on the public menu. Locations sharing a brand name are grouped together automatically, on this screen and on the public site.', 'Add location', 'location', rows,
+    ['Location','Brand','Menu items','Status','Actions'], filtered.length);
+  return renderAdminShell(inner);
+}
+
+/* ============================================================
+   11. ADMIN: CATEGORIES
+   ============================================================ */
+function renderAdminCategories(){
+  var term = state.admin.search.trim().toLowerCase();
+  var list = db.categories.slice().sort(function(a,b){return a.displayOrder-b.displayOrder;}).filter(function(c){ return !term || c.name.toLowerCase().indexOf(term)!==-1; });
+  var rows = list.map(function(c,idx){
+    var itemCount = db.menuItems.filter(function(m){ return m.categoryId===c.id; }).length;
+    var updatedLine = formatUpdated(c);
+    return '<tr><td><strong>'+esc(c.name)+'</strong>'+(updatedLine?'<div class="small-meta">'+updatedLine+'</div>':'')+'</td>'+
+      '<td class="small-meta">'+itemCount+' menu item(s)</td>'+
+      '<td><span class="status-pill '+(c.active?'active':'inactive')+'">'+(c.active?'Active':'Inactive')+'</span></td>'+
+      '<td><div class="row-actions">'+
+        '<button class="mini-icon-btn" data-move-cat="up:'+c.id+'" title="Move up">↑</button>'+
+        '<button class="mini-icon-btn" data-move-cat="down:'+c.id+'" title="Move down">↓</button>'+
+        '<button class="btn btn-outline btn-sm" data-edit-cat="'+c.id+'">Edit</button>'+
+        '<button class="btn btn-ghost btn-sm" data-toggle-cat="'+c.id+'">'+(c.active?'Deactivate':'Activate')+'</button>'+
+        '<button class="btn btn-danger btn-sm" data-delete-cat="'+c.id+'">Delete</button>'+
+      '</div></td></tr>';
+  }).join('');
+  var inner = adminPanel('Categories', 'Control how menu items are grouped and the order they appear in.', 'Add category', 'category', rows,
+    ['Category','Menu items','Status','Actions'], list.length);
+  return renderAdminShell(inner);
+}
+
+/* ============================================================
+   12. ADMIN: INGREDIENTS
+   ============================================================ */
+function renderAdminIngredients(){
+  var term = state.admin.search.trim().toLowerCase();
+  var list = db.ingredients.filter(function(i){ return !term || i.name.toLowerCase().indexOf(term)!==-1 || (i.brand||'').toLowerCase().indexOf(term)!==-1 || (i.supplier||'').toLowerCase().indexOf(term)!==-1; });
+  var rows = list.map(function(i){
+    var usedBy = db.menuItems.filter(function(m){ return m.ingredientIds.indexOf(i.id)!==-1; });
+    var badges = (i.allergens||[]).map(function(a){ return '<span class="badge-chip warn">'+esc(allergenLabel(a))+'</span>'; }).join('')
+      + (i.mayContain||[]).map(function(a){ return '<span class="badge-chip may">May: '+esc(allergenLabel(a))+'</span>'; }).join('');
+    if(!badges) badges = '<span class="small-meta">No listed allergens</span>';
+    var calBadge = typeof i.calories==='number' ? '<span class="badge-chip cal">'+i.calories+' kcal</span>' : '<span class="small-meta">Calories not set</span>';
+    var dietBadges = (i.vegetarian?'<span class="badge-chip" style="background:#e5f3df; color:#3f7d2c;">🌱 Veg</span>':'')+(i.halal?'<span class="badge-chip" style="background:#e6f0f5; color:#2b5f7a;">☾ Halal</span>':'');
+    var brandSupplierLine = (i.brand||i.supplier) ? '<div class="small-meta">'+[i.brand, i.supplier].filter(Boolean).join(' · ')+'</div>' : '';
+    var updatedLine = formatUpdated(i);
+    return '<tr><td><strong>'+esc(i.name)+'</strong>'+brandSupplierLine+(i.description?'<div class="small-meta">'+esc(i.description)+'</div>':'')+(updatedLine?'<div class="small-meta">'+updatedLine+'</div>':'')+'</td>'+
+      '<td style="max-width:260px;">'+badges+'</td>'+
+      '<td>'+calBadge+'</td>'+
+      '<td>'+(dietBadges||'<span class="small-meta">—</span>')+'</td>'+
+      '<td class="small-meta">Used in '+usedBy.length+' item(s)</td>'+
+      '<td><span class="status-pill '+(i.active?'active':'inactive')+'">'+(i.active?'Active':'Inactive')+'</span></td>'+
+      '<td><div class="row-actions">'+
+        '<button class="btn btn-outline btn-sm" data-edit-ing="'+i.id+'">Edit</button>'+
+        '<button class="btn btn-ghost btn-sm" data-toggle-ing="'+i.id+'">'+(i.active?'Deactivate':'Activate')+'</button>'+
+        '<button class="btn btn-danger btn-sm" data-delete-ing="'+i.id+'">Delete</button>'+
+      '</div></td></tr>';
+  }).join('');
+  var inner = adminPanel('Ingredients', 'The source of truth for allergen information. Menu items calculate their allergens from here. Brand and supplier are for your team only \u2014 customers never see them.', 'Add ingredient', 'ingredient', rows,
+    ['Ingredient','Allergens','Calories','Dietary','Usage','Status','Actions'], list.length);
+  return renderAdminShell(inner);
+}
+
+/* ============================================================
+   13. ADMIN: MENU ITEMS
+   ============================================================ */
+function renderAdminMenuItems(){
+  var term = state.admin.search.trim().toLowerCase();
+  var list = db.menuItems.filter(function(m){ return !term || m.name.toLowerCase().indexOf(term)!==-1; });
+  var rows = list.map(function(m){
+    var cat = db.categories.find(function(c){ return c.id===m.categoryId; });
+    var ai = getMenuItemAllergens(m, db);
+    var locs = m.locationIds.map(function(lid){ var l=db.locations.find(function(x){return x.id===lid;}); return l?l.name:null; }).filter(Boolean);
+    var flags = '';
+    if(!m.ingredientIds || m.ingredientIds.length===0) flags += '<div class="warn-pill" style="margin-top:4px;">No ingredients</div>';
+    if(locs.length===0) flags += '<div class="warn-pill" style="margin-top:4px;">No active locations</div>';
+    var allergenCell = ai.contains.map(function(a){return '<span class="badge-chip warn">'+esc(allergenLabel(a))+'</span>';}).join('')
+      + ai.mayContain.map(function(a){return '<span class="badge-chip may">May: '+esc(allergenLabel(a))+'</span>';}).join('');
+    if(!allergenCell) allergenCell = '<span class="small-meta">No listed allergens</span>';
+    var cal = getMenuItemCalories(m, db);
+    var calCell = cal.ingredientCount===0 ? '<span class="small-meta">—</span>'
+      : cal.complete ? '<span class="badge-chip cal">'+cal.total+' kcal</span>'
+      : '<span class="small-meta">'+cal.missingCount+' of '+cal.ingredientCount+' ingredient(s) missing calories</span>';
+    var updatedLine = formatUpdated(m);
+    return '<tr><td><strong>'+esc(m.name)+'</strong><div class="small-meta">'+esc(cat?cat.name:'Uncategorised')+'</div>'+(updatedLine?'<div class="small-meta">'+updatedLine+'</div>':'')+flags+'</td>'+
+      '<td style="max-width:220px;">'+allergenCell+'</td>'+
+      '<td>'+calCell+'</td>'+
+      '<td class="small-meta">'+(locs.join(', ')||'—')+'</td>'+
+      '<td><span class="status-pill '+(m.active?'active':'inactive')+'">'+(m.active?'Active':'Inactive')+'</span></td>'+
+      '<td><div class="row-actions">'+
+        '<button class="btn btn-outline btn-sm" data-edit-mi="'+m.id+'">Edit</button>'+
+        '<button class="btn btn-ghost btn-sm" data-toggle-mi="'+m.id+'">'+(m.active?'Deactivate':'Activate')+'</button>'+
+        '<button class="btn btn-danger btn-sm" data-delete-mi="'+m.id+'">Delete</button>'+
+      '</div></td></tr>';
+  }).join('');
+  var inner = adminPanel('Menu items', 'Create products once, then connect ingredients and assign locations.', 'Add menu item', 'menuitem', rows,
+    ['Item','Allergens (calculated)','Calories','Locations','Status','Actions'], list.length);
+  return renderAdminShell(inner);
+}
+
+/* ============================================================
+   13b. ADMIN: TEAM (master account only)
+   ============================================================ */
+function renderAdminTeam(){
+  if(state.admin.currentUserRole!=='master'){
+    return renderAdminShell('<div class="admin-topline"><div><h1>Team</h1></div></div><div class="panel"><div style="padding:24px;">Only a master account can manage team access.</div></div>');
+  }
+  var admins = db.settings.admins.slice().sort(function(a,b){ return a.role==='master' ? -1 : (b.role==='master' ? 1 : 0); });
+  var rows = admins.map(function(a){
+    var isSelf = a.id === state.admin.currentUserId;
+    var actions = isSelf
+      ? '<div class="row-actions"><button class="btn btn-outline btn-sm" data-edit-acct="'+a.id+'">Edit</button><span class="small-meta">This is you</span></div>'
+      : '<div class="row-actions">'+
+          '<button class="btn btn-outline btn-sm" data-edit-acct="'+a.id+'">Edit</button>'+
+          '<button class="btn btn-ghost btn-sm" data-toggle-acct="'+a.id+'">'+(a.active?'Deactivate':'Activate')+'</button>'+
+        '</div>';
+    var roleBadge = a.role==='master'
+      ? '<span class="status-pill active">Master</span>'
+      : a.role==='viewer'
+        ? '<span class="status-pill inactive" style="background:var(--amber-100); color:var(--amber-600);">Viewer</span>'
+        : '<span class="status-pill inactive" style="background:var(--teal-100); color:var(--teal-800);">Staff</span>';
+    return '<tr><td><strong>'+esc(a.username)+'</strong>'+(a.displayName?'<div class="small-meta">'+esc(a.displayName)+'</div>':'')+'</td>'+
+      '<td>'+roleBadge+'</td>'+
+      '<td><span class="status-pill '+(a.active?'active':'inactive')+'">'+(a.active?'Active':'Inactive')+'</span></td>'+
+      '<td>'+actions+'</td></tr>';
+  }).join('');
+  var inner = '<div class="admin-topline"><div><h1>Team</h1><div class="sub">Who can log in to the back office, and what they can do.</div></div>'+
+    '</div>'+
+    '<div class="panel">'+
+      '<div class="panel-head"><h2>All accounts ('+admins.length+')</h2></div>'+
+      '<div class="table-scroll"><table><thead><tr><th>Account</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>'+
+      '<tbody>'+rows+'</tbody></table></div>'+
+    '</div>'+
+    '<div class="disclaimer-box" style="margin-top:20px;"><strong>Adding a new team member</strong>Speak to your system administrator to have a new login set up, then come back here to set their role and display name. You can\u2019t change your own role or deactivate yourself, to prevent anyone accidentally locking themselves out.</div>';
+  return renderAdminShell(inner);
+}
+
+/* generic panel wrapper used by the 4 CRUD screens above */
+function adminPanel(title, sub, addLabel, addType, rowsHtml, headers, count){
+  return '<div class="admin-topline"><div><h1>'+title+'</h1><div class="sub">'+sub+'</div></div>'+
+      '<button class="btn btn-amber" data-quickadd="'+addType+'">+ '+addLabel+'</button>'+
+    '</div>'+
+    '<div class="panel">'+
+      '<div class="panel-head"><h2>All '+title.toLowerCase()+' ('+count+')</h2>'+
+        '<div class="panel-search">🔍 <input id="adminSearch" type="text" placeholder="Search…" value="'+esc(state.admin.search)+'"></div>'+
+      '</div>'+
+      '<div class="table-scroll"><table><thead><tr>'+headers.map(function(h){return '<th>'+h+'</th>';}).join('')+'</tr></thead>'+
+      '<tbody>'+(rowsHtml || '<tr><td colspan="'+headers.length+'"><div class="empty-row">Nothing here yet.</div></td></tr>')+'</tbody></table></div>'+
+    '</div>';
+}
+
+/* ============================================================
+   14. ADMIN: SETTINGS (incl. import/export)
+   ============================================================ */
+function renderAdminSettings(){
+  var isMaster = state.admin.currentUserRole==='master';
+  var adminCount = db.settings.admins.length;
+  var completeItems = db.menuItems.filter(function(m){ return getMenuItemCalories(m, db).complete && m.ingredientIds.length>0; }).length;
+  var totalItems = db.menuItems.length;
+  var inner = '<div class="admin-topline"><div><h1>Settings</h1><div class="sub">Live database options \u2014 changes here apply for everyone immediately.</div></div></div>'+
+    '<div class="settings-card">'+
+      '<h3>Team &amp; access</h3><p class="sub">'+adminCount+' account(s) can log in to this back office.'+(isMaster?' Manage roles and access under Team.':' Only a master account can manage team access.')+'</p>'+
+      (isMaster ? '<button class="btn btn-primary btn-sm" data-adminnav="team">Manage team</button>' : '')+
+    '</div>'+
+    '<div class="settings-card">'+
+      '<h3>Calories</h3><p class="sub">Calorie totals are calculated per menu item from each connected ingredient\'s calorie value, but stay hidden from customers until you turn this on — and even then, a menu item only shows a total once every one of its ingredients has a value. Currently '+completeItems+' of '+totalItems+' menu item(s) are complete. This switch is shared \u2014 turning it on here turns it on for every customer, on every device.</p>'+
+      '<div class="toggle-row"><span>Show completed calorie totals to customers</span><label class="switch"><input type="checkbox" id="showCaloriesToggle" '+(db.settings.showCalories?'checked':'')+'><span class="track"></span></label></div>'+
+    '</div>'+
+    '<div class="settings-card">'+
+      '<h3>Export data</h3><p class="sub">Download a JSON snapshot of everything currently in the live database \u2014 useful as an occasional backup or for record-keeping.</p>'+
+      '<button class="btn btn-amber" id="exportJson">⬇ Export JSON</button>'+
+    '</div>'+
+    '<div class="settings-card" style="border-color:#f2c2c2;">'+
+      '<h3>⚠️ Clear all menu data</h3><p class="sub">Permanently deletes every location, category, ingredient and menu item from the live database \u2014 for everyone, on every device. Team accounts are kept. Export a backup first if you want to keep anything. Intended for clearing placeholder/demo data before entering your real menu.</p>'+
+      '<button class="btn btn-danger" id="resetDataBtn">Clear all menu data</button>'+
+    '</div>'+
+    '<div class="settings-card" style="border-color:#f2c2c2;">'+
+      '<h3>Security</h3>'+
+      '<p class="sub" style="margin-bottom:0;">Logins are checked by a secure authentication service with properly hashed passwords, and every read/write is governed by security rules on the database itself. Bulk data import isn\u2019t available here \u2014 speak to your system administrator for large data changes.</p>'+
+    '</div>';
+  return renderAdminShell(inner);
+}
+
+/* ============================================================
+   15. MODALS: FORM BUILDERS
+   ============================================================ */
+function modalWrap(innerHtml, extraClass){
+  return '<div class="modal-overlay" id="modalOverlay"><div class="modal '+(extraClass||'')+'">'+innerHtml+'</div></div>';
+}
+
+function renderLocationModal(){
+  var editing = state.modal.payload;
+  var l = editing || {name:'', description:'', address:'', brand:'', active:true};
+  var existingBrands = Array.from(new Set(db.locations.map(function(x){ return (x.brand||'').trim(); }).filter(Boolean)));
+  var brandOptions = existingBrands.map(function(b){ return '<option value="'+esc(b)+'">'; }).join('');
+  return modalWrap(
+    '<h2>'+(editing?'Edit location':'Add location')+'</h2><p class="sub">Locations appear as buttons on the public landing page.</p>'+
+    '<div id="locForm">'+
+      '<div class="field"><label for="locName">Location name *</label><input type="text" id="locName" value="'+esc(l.name)+'" required></div>'+
+      '<div class="field"><label for="locBrand">Brand (optional)</label><input type="text" id="locBrand" list="brandOptions" value="'+esc(l.brand||'')+'" placeholder="e.g. Volcano Falls"><datalist id="brandOptions">'+brandOptions+'</datalist><div class="hint">Locations sharing the same brand name are grouped together on the public site and in this list — spell it exactly the same each time.</div></div>'+
+      '<div class="field"><label for="locAddr">Address / details (optional)</label><input type="text" id="locAddr" value="'+esc(l.address)+'"></div>'+
+      '<div class="field"><label for="locDesc">Description (optional)</label><textarea id="locDesc">'+esc(l.description)+'</textarea></div>'+
+      '<div class="toggle-row"><span>Active (visible on public site)</span><label class="switch"><input type="checkbox" id="locActive" '+(l.active?'checked':'')+'><span class="track"></span></label></div>'+
+      '<div class="modal-footer">'+(editing?'<button type="button" class="btn btn-outline" id="deleteLoc">Deactivate</button>':'<span></span>')+
+        '<div style="display:flex; gap:10px;"><button type="button" class="btn btn-ghost" id="cancelModal">Cancel</button><button type="button" id="submitLocForm" class="btn btn-primary">'+(editing?'Save changes':'Add location')+'</button></div>'+
+      '</div>'+
+    '</div>'
+  );
+}
+
+function renderCategoryModal(){
+  var editing = state.modal.payload;
+  var c = editing || {name:'', description:'', active:true};
+  return modalWrap(
+    '<h2>'+(editing?'Edit category':'Add category')+'</h2><p class="sub">Categories group menu items on the public menu.</p>'+
+    '<div id="catForm">'+
+      '<div class="field"><label for="catName">Category name *</label><input type="text" id="catName" value="'+esc(c.name)+'" required></div>'+
+      '<div class="field"><label for="catDesc">Description (optional)</label><textarea id="catDesc">'+esc(c.description)+'</textarea></div>'+
+      '<div class="toggle-row"><span>Active</span><label class="switch"><input type="checkbox" id="catActive" '+(c.active?'checked':'')+'><span class="track"></span></label></div>'+
+      '<div class="modal-footer">'+(editing?'<button type="button" class="btn btn-outline" id="deleteCat">Deactivate</button>':'<span></span>')+
+        '<div style="display:flex; gap:10px;"><button type="button" class="btn btn-ghost" id="cancelModal">Cancel</button><button type="button" id="submitCatForm" class="btn btn-primary">'+(editing?'Save changes':'Add category')+'</button></div>'+
+      '</div>'+
+    '</div>'
+  );
+}
+
+function renderIngredientModal(){
+  var editing = state.modal.payload;
+  var i = editing || {name:'', description:'', allergens:[], mayContain:[], calories:null, brand:'', supplier:'', vegetarian:false, halal:false, active:true};
+  var mayList = i.mayContain||[];
+  var checks = ALLERGENS.map(function(a){
+    var st = i.allergens.indexOf(a.key)!==-1 ? 'contains' : (mayList.indexOf(a.key)!==-1 ? 'may' : 'none');
+    return '<div class="allergen-status-row">'+
+      '<span class="name">'+a.icon+' '+esc(a.label)+'</span>'+
+      '<div class="status-toggle">'+
+        '<label class="'+(st==='none'?'sel':'')+'"><input type="radio" name="alg_'+a.key+'" value="none" '+(st==='none'?'checked':'')+'>None</label>'+
+        '<label class="'+(st==='may'?'sel sel-may':'')+'"><input type="radio" name="alg_'+a.key+'" value="may" '+(st==='may'?'checked':'')+'>May contain</label>'+
+        '<label class="'+(st==='contains'?'sel sel-contains':'')+'"><input type="radio" name="alg_'+a.key+'" value="contains" '+(st==='contains'?'checked':'')+'>Contains</label>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+  return modalWrap(
+    '<h2>'+(editing?'Edit ingredient':'Add ingredient')+'</h2><p class="sub">Ingredients are the source of truth for allergen data.</p>'+
+    '<div id="ingForm">'+
+      '<div class="field"><label for="ingName">Ingredient name *</label><input type="text" id="ingName" value="'+esc(i.name)+'" required></div>'+
+      '<div class="field"><label for="ingBrand">Brand name (optional)</label><input type="text" id="ingBrand" value="'+esc(i.brand||'')+'"><div class="hint">Internal only — never shown to customers.</div></div>'+
+      '<div class="field"><label for="ingSupplier">Supplier (optional)</label><input type="text" id="ingSupplier" value="'+esc(i.supplier||'')+'"><div class="hint">Internal only — never shown to customers.</div></div>'+
+      '<div class="field"><label>Dietary</label>'+
+        '<label class="checkbox-row '+(i.vegetarian?'checked':'')+'" style="margin-bottom:8px;"><input type="checkbox" id="ingVegetarian" '+(i.vegetarian?'checked':'')+'> 🌱 Suitable for vegetarians</label>'+
+        '<label class="checkbox-row '+(i.halal?'checked':'')+'"><input type="checkbox" id="ingHalal" '+(i.halal?'checked':'')+'> ☾ Halal friendly</label>'+
+        '<div class="hint">Shown to customers. A menu item only shows as vegetarian/halal once every one of its ingredients qualifies.</div>'+
+      '</div>'+
+      '<div class="field"><label>Allergen status</label><div class="allergen-status-list">'+checks+'</div></div>'+
+      '<div class="field"><label for="ingNotes">Ingredient notes (optional)</label><textarea id="ingNotes" placeholder="e.g. Contains wheat flour and sesame seeds.">'+esc(i.description)+'</textarea><div class="hint">Shown to customers on this ingredient\'s detail page.</div></div>'+
+      '<div class="field"><label for="ingCalories">Calories per portion, kcal (optional)</label><input type="number" min="0" step="1" id="ingCalories" value="'+(typeof i.calories==='number'?i.calories:'')+'" placeholder="e.g. 180"><div class="hint">Background field — hidden from customers until switched on in Settings, and only shown for a menu item once every one of its ingredients has a value.</div></div>'+
+      '<div class="toggle-row"><span>Active</span><label class="switch"><input type="checkbox" id="ingActive" '+(i.active?'checked':'')+'><span class="track"></span></label></div>'+
+      '<div class="modal-footer">'+(editing?'<button type="button" class="btn btn-outline" id="deleteIng">Deactivate</button>':'<span></span>')+
+        '<div style="display:flex; gap:10px;"><button type="button" class="btn btn-ghost" id="cancelModal">Cancel</button><button type="button" id="submitIngForm" class="btn btn-primary">'+(editing?'Save changes':'Add ingredient')+'</button></div>'+
+      '</div>'+
+    '</div>'
+  );
+}
+
+var menuItemFormState = null; // {name,description,categoryId,locationIds,ingredientIds,active,ingSearch}
+
+function renderMenuItemModal(){
+  var editing = state.modal.payload;
+  if(!menuItemFormState){
+    menuItemFormState = editing ? JSON.parse(JSON.stringify(editing)) : {name:'', description:'', categoryId:'', locationIds:[], ingredientIds:[], active:true};
+    menuItemFormState.ingSearch = '';
+  }
+  var f = menuItemFormState;
+
+  var catOptions = db.categories.filter(function(c){return c.active;}).sort(function(a,b){return a.displayOrder-b.displayOrder;})
+    .map(function(c){ return '<option value="'+c.id+'" '+(f.categoryId===c.id?'selected':'')+'>'+esc(c.name)+'</option>'; }).join('');
+
+  var locChecks = db.locations.map(function(l){
+    var checked = f.locationIds.indexOf(l.id)!==-1;
+    return '<label class="checkbox-row '+(checked?'checked':'')+' '+(l.active?'':'')+'"><input type="checkbox" data-loc="'+l.id+'" '+(checked?'checked':'')+'> '+esc(l.name)+(l.active?'':' (inactive)')+'</label>';
+  }).join('');
+
+  var term = (f.ingSearch||'').toLowerCase();
+  var pickableIngs = db.ingredients.filter(function(i){ return i.active && f.ingredientIds.indexOf(i.id)===-1 && (!term || i.name.toLowerCase().indexOf(term)!==-1); });
+  var pickerRows = pickableIngs.slice(0,30).map(function(i){
+    var bits = [];
+    if(i.allergens.length) bits.push('Contains: '+i.allergens.map(allergenLabel).join(', '));
+    if((i.mayContain||[]).length) bits.push('May contain: '+i.mayContain.map(allergenLabel).join(', '));
+    var mini = bits.length ? bits.join(' · ') : 'No listed allergens';
+    return '<div class="ing-picker-row"><div><div class="name">'+esc(i.name)+'</div><div class="allergen-mini">'+mini+'</div></div>'+
+      '<button type="button" class="btn btn-outline btn-sm" data-add-ing="'+i.id+'">Add</button></div>';
+  }).join('') || '<div class="small-meta" style="padding:8px;">No matching ingredients.</div>';
+
+  var selectedRows = f.ingredientIds.map(function(iid, idx){
+    var i = db.ingredients.find(function(x){return x.id===iid;});
+    if(!i) return '';
+    return '<div class="selected-ing-chip"><span>'+esc(i.name)+'</span><div class="move-btns">'+
+      (idx>0?'<button type="button" class="mini-icon-btn" data-move-ing="up:'+iid+'">↑</button>':'')+
+      (idx<f.ingredientIds.length-1?'<button type="button" class="mini-icon-btn" data-move-ing="down:'+iid+'">↓</button>':'')+
+      '<button type="button" class="mini-icon-btn" data-remove-ing="'+iid+'">✕</button>'+
+    '</div></div>';
+  }).join('');
+
+  var computedContains = [], computedMay = [];
+  (function(){
+    var cSet = {}, mSet = {};
+    f.ingredientIds.forEach(function(iid){
+      var i = db.ingredients.find(function(x){return x.id===iid;});
+      if(!i) return;
+      (i.allergens||[]).forEach(function(a){ cSet[a]=true; });
+      (i.mayContain||[]).forEach(function(a){ mSet[a]=true; });
+    });
+    computedContains = Object.keys(cSet);
+    computedMay = Object.keys(mSet).filter(function(a){ return !cSet[a]; });
+  })();
+
+  return modalWrap(
+    '<h2>'+(editing?'Edit menu item':'Add menu item')+'</h2><p class="sub">Connect ingredients below — allergens are calculated automatically.</p>'+
+    '<div id="miForm">'+
+      '<div class="field"><label for="miName">Menu item name *</label><input type="text" id="miName" value="'+esc(f.name)+'" required></div>'+
+      '<div class="field"><label for="miDesc">Description</label><textarea id="miDesc">'+esc(f.description)+'</textarea></div>'+
+      '<div class="field"><label for="miCat">Category</label><select id="miCat"><option value="">Uncategorised</option>'+catOptions+'</select></div>'+
+      '<div class="field"><label>Available at locations</label><div class="checkbox-grid">'+locChecks+'</div></div>'+
+      '<div class="field"><label>Connected ingredients</label>'+
+        '<input type="text" id="ingSearchInput" placeholder="Search ingredients to add…" value="'+esc(f.ingSearch)+'" style="width:100%; border:1.5px solid var(--line); border-radius:10px; padding:9px 12px; font-size:13.5px; margin-bottom:8px;">'+
+        '<div class="ing-picker">'+pickerRows+'</div>'+
+        (f.ingredientIds.length ? '<div class="selected-ing-list">'+selectedRows+'</div>' : '<div class="no-ing-warn" style="margin-top:10px;">No ingredients connected yet — this item will show no listed allergens.</div>')+
+      '</div>'+
+      '<div class="computed-box"><div class="title">Calculated allergens (from ingredients)</div>'+
+        (computedContains.length || computedMay.length
+          ? computedContains.map(function(a){return '<span class="badge-chip warn">'+esc(allergenLabel(a))+'</span>';}).join('')
+            + computedMay.map(function(a){return '<span class="badge-chip may">May: '+esc(allergenLabel(a))+'</span>';}).join('')
+          : '<span class="small-meta">No listed allergens</span>')+
+      '</div>'+
+      '<div class="computed-box"><div class="title">Calories (background field, hidden from customers)</div>'+
+        (function(){
+          var cal = getMenuItemCalories({ingredientIds:f.ingredientIds}, db);
+          if(cal.ingredientCount===0) return '<span class="small-meta">Add ingredients to calculate.</span>';
+          if(cal.complete) return '<span class="badge-chip cal">'+cal.total+' kcal total</span>';
+          return '<span class="small-meta">'+cal.missingCount+' of '+cal.ingredientCount+' connected ingredient(s) have no calorie value set yet — add these on the Ingredients screen to complete the total.</span>';
+        })()+
+      '</div>'+
+      '<div class="computed-box"><div class="title">Dietary (calculated from ingredients)</div>'+
+        (function(){
+          if(!f.ingredientIds.length) return '<span class="small-meta">Add ingredients to calculate.</span>';
+          var d = getMenuItemDietary({ingredientIds:f.ingredientIds}, db);
+          var badges = (d.vegetarian?'<span class="badge-chip" style="background:#e5f3df; color:#3f7d2c;">🌱 Vegetarian</span>':'')+(d.halal?'<span class="badge-chip" style="background:#e6f0f5; color:#2b5f7a;">☾ Halal</span>':'');
+          return badges || '<span class="small-meta">Not vegetarian or halal — at least one connected ingredient isn\u2019t marked as either.</span>';
+        })()+
+      '</div>'+
+      '<div class="toggle-row" style="margin-top:16px;"><span>Active</span><label class="switch"><input type="checkbox" id="miActive" '+(f.active?'checked':'')+'><span class="track"></span></label></div>'+
+      '<div class="modal-footer">'+(editing?'<button type="button" class="btn btn-outline" id="deleteMi">Deactivate</button>':'<span></span>')+
+        '<div style="display:flex; gap:10px;"><button type="button" class="btn btn-ghost" id="cancelModal">Cancel</button><button type="button" id="submitMiForm" class="btn btn-primary">'+(editing?'Save changes':'Add menu item')+'</button></div>'+
+      '</div>'+
+    '</div>',
+    'mi-modal'
+  );
+}
+
+function renderAccountModal(){
+  var editing = state.modal.payload;
+  var a = editing || {username:'', displayName:'', role:'staff', active:true};
+  var isSelf = editing && editing.id === state.admin.currentUserId;
+  var roleVal = a.role==='master' ? 'master' : (a.role==='viewer' ? 'viewer' : 'staff');
+  return modalWrap(
+    '<h2>Edit team member</h2>'+
+    (isSelf
+      ? '<p class="sub">This is your own account. You can\u2019t change your own role or deactivate yourself \u2014 that\u2019s what stops anyone from accidentally locking themselves out.</p>'
+      : '<p class="sub">Choose what this account can do. Staff and Viewer accounts can\u2019t see or manage other team accounts \u2014 only a master account can.</p>')+
+    '<div id="acctForm">'+
+      '<div class="field"><label>Email</label><input type="text" value="'+esc(a.username)+'" disabled style="background:var(--paper-100);"></div>'+
+      '<div class="field"><label for="acctDisplayName">Display name (optional)</label><input type="text" id="acctDisplayName" value="'+esc(a.displayName||'')+'" placeholder="Shown in the \u201clast updated by\u201d log"></div>'+
+      (isSelf?'':
+        '<div class="field"><label>Role</label><div class="status-toggle" style="width:100%;">'+
+          '<label class="'+(roleVal==='staff'?'sel':'')+'" style="flex:1; text-align:center;"><input type="radio" name="acctRole" value="staff" '+(roleVal==='staff'?'checked':'')+'>Staff</label>'+
+          '<label class="'+(roleVal==='viewer'?'sel':'')+'" style="flex:1; text-align:center;"><input type="radio" name="acctRole" value="viewer" '+(roleVal==='viewer'?'checked':'')+'>Viewer</label>'+
+          '<label class="'+(roleVal==='master'?'sel':'')+'" style="flex:1; text-align:center;"><input type="radio" name="acctRole" value="master" '+(roleVal==='master'?'checked':'')+'>Master</label>'+
+        '</div><div class="hint">Staff: full edit access. Viewer: can browse and print, but not edit or delete anything. Master: full edit access plus managing the team itself \u2014 give this to trusted co-owners only.</div></div>')+
+      (isSelf?'':'<div class="toggle-row"><span>Active (can log in)</span><label class="switch"><input type="checkbox" id="acctActive" '+(a.active?'checked':'')+'><span class="track"></span></label></div>')+
+      '<div class="modal-footer"><span></span>'+
+        '<div style="display:flex; gap:10px;"><button type="button" class="btn btn-ghost" id="cancelModal">Cancel</button><button type="button" id="submitAcctForm" class="btn btn-primary">Save changes</button></div>'+
+      '</div>'+
+    '</div>'
+  );
+}
+
+function renderConfirmModal(){
+  var c = state.confirm;
+  return '<div class="modal-overlay confirm-modal"><div class="modal">'+
+    '<h2>Please confirm</h2><p class="sub">'+esc(c.message)+'</p>'+
+    '<div class="modal-footer"><button class="btn btn-ghost" id="confirmNo">Cancel</button><button class="btn btn-danger" id="confirmYes">Confirm</button></div>'+
+  '</div></div>';
+}
+
+/* ============================================================
+   16. MASTER RENDER
+   ============================================================ */
+function render(){
+  var html = '';
+  var showAdmin = state.admin.loggedIn && state.admin.currentUserRole!=='viewer' && state.screen!=='landing' && state.screen!=='menu' && state.screen!=='item' && state.screen!=='ingredient';
+  if(showAdmin){
+    switch(state.admin.screen){
+      case 'locations': html = renderAdminLocations(); break;
+      case 'categories': html = renderAdminCategories(); break;
+      case 'ingredients': html = renderAdminIngredients(); break;
+      case 'menuitems': html = renderAdminMenuItems(); break;
+      case 'team': html = renderAdminTeam(); break;
+      case 'settings': html = renderAdminSettings(); break;
+      default: html = renderAdminDashboard();
+    }
+  } else if(state.screen==='adminLogin'){
+    html = renderAdminLogin();
+  } else if(state.screen==='menu'){
+    html = renderMenu();
+  } else if(state.screen==='item'){
+    html = renderItemDetail();
+  } else if(state.screen==='ingredient'){
+    html = renderIngredientDetail();
+  } else {
+    html = renderLanding();
+  }
+
+  var modalHtml = '';
+  if(state.modal){
+    if(state.modal.type==='location') modalHtml = renderLocationModal();
+    else if(state.modal.type==='category') modalHtml = renderCategoryModal();
+    else if(state.modal.type==='ingredient') modalHtml = renderIngredientModal();
+    else if(state.modal.type==='menuitem') modalHtml = renderMenuItemModal();
+    else if(state.modal.type==='account') modalHtml = renderAccountModal();
+  }
+  if(state.confirm){ modalHtml += renderConfirmModal(); }
+
+  document.getElementById('app').innerHTML = html + modalHtml;
+  attachEvents();
+}
+
+/* ============================================================
+   17. EVENT WIRING
+   (Simple re-render-on-every-change pattern — event listeners are
+   attached fresh after each render since we rebuild innerHTML.)
+   ============================================================ */
+function attachEvents(){
+  var app = document.getElementById('app');
+
+  /* ---- Public: landing ---- */
+  app.querySelectorAll('[data-landloc]').forEach(function(b){
+    b.addEventListener('click', function(){ go({screen:'menu', locationId:b.getAttribute('data-landloc'), categoryFilter:'all', allergenFilterSelected:[], dietaryFilter:{vegetarian:false, halal:false}}); });
+  });
+  var brandHome = document.getElementById('brandHome'); if(brandHome) brandHome.addEventListener('click', function(){ go({screen:'landing'}); });
+  var brandHomeAdmin = document.getElementById('brandHomeAdmin'); if(brandHomeAdmin) brandHomeAdmin.addEventListener('click', function(){ sb.auth.signOut(); go({screen:'landing', admin:Object.assign({}, state.admin, {loggedIn:false, currentUserRole:''})}); });
+  var openAdmin = document.getElementById('openAdmin'); if(openAdmin) openAdmin.addEventListener('click', function(){ go({screen:'adminLogin'}); state.admin.loginError=''; });
+
+  /* ---- Public: menu ---- */
+  var backToLanding = document.getElementById('backToLanding'); if(backToLanding) backToLanding.addEventListener('click', function(){ go({screen:'landing'}); });
+  var backToMenu = document.getElementById('backToMenu'); if(backToMenu) backToMenu.addEventListener('click', function(){ go({screen:'menu'}); });
+  var backToItem = document.getElementById('backToItem'); if(backToItem) backToItem.addEventListener('click', function(){ go({screen:'item'}); });
+  var printIng = document.getElementById('printIng'); if(printIng) printIng.addEventListener('click', function(){ window.print(); });
+  var printIng2 = document.getElementById('printIng2'); if(printIng2) printIng2.addEventListener('click', function(){ window.print(); });
+  app.querySelectorAll('[data-open-ing]').forEach(function(b){
+    b.addEventListener('click', function(){ go({screen:'ingredient', ingredientId:b.getAttribute('data-open-ing')}); });
+  });
+  var printItem = document.getElementById('printItem'); if(printItem) printItem.addEventListener('click', function(){ window.print(); });
+  var printItem2 = document.getElementById('printItem2'); if(printItem2) printItem2.addEventListener('click', function(){ window.print(); });
+  app.querySelectorAll('[data-cat]').forEach(function(b){
+    b.addEventListener('click', function(){ go({categoryFilter:b.getAttribute('data-cat')}); });
+  });
+  app.querySelectorAll('[data-item]').forEach(function(b){
+    b.addEventListener('click', function(){ go({screen:'item', menuItemId:b.getAttribute('data-item')}); });
+  });
+  var openFilter = document.getElementById('openFilter'); if(openFilter) openFilter.addEventListener('click', function(){ go({allergenFilterOpen:true}); });
+  var filterOverlay = document.getElementById('filterOverlay');
+  if(filterOverlay){
+    filterOverlay.addEventListener('click', function(e){ if(e.target===filterOverlay) go({allergenFilterOpen:false}); });
+    app.querySelectorAll('[data-mode]').forEach(function(b){ b.addEventListener('click', function(){ state.allergenFilterMode = b.getAttribute('data-mode'); render(); }); });
+    app.querySelectorAll('[data-allergen]').forEach(function(b){
+      b.addEventListener('change', function(){
+        var key = b.getAttribute('data-allergen');
+        var idx = state.allergenFilterSelected.indexOf(key);
+        if(b.checked && idx===-1) state.allergenFilterSelected.push(key);
+        if(!b.checked && idx!==-1) state.allergenFilterSelected.splice(idx,1);
+        render();
+      });
+    });
+    app.querySelectorAll('[data-dietary]').forEach(function(b){
+      b.addEventListener('change', function(){
+        state.dietaryFilter[b.getAttribute('data-dietary')] = b.checked;
+        render();
+      });
+    });
+    var clearFilter = document.getElementById('clearFilter'); if(clearFilter) clearFilter.addEventListener('click', function(){ go({allergenFilterSelected:[], dietaryFilter:{vegetarian:false, halal:false}}); });
+    var applyFilter = document.getElementById('applyFilter'); if(applyFilter) applyFilter.addEventListener('click', function(){ go({allergenFilterOpen:false}); });
+  }
+
+  /* ---- Admin: login ---- */
+  var authEmail = document.getElementById('authEmail');
+  var authPassword = document.getElementById('authPassword');
+  var loginSubmitBtn = document.getElementById('loginSubmitBtn');
+  async function attemptLogin(){
+    var email = authEmail ? authEmail.value.trim() : '';
+    var pw = authPassword ? authPassword.value : '';
+    if(!email || !pw){
+      state.admin.loginError = 'Enter your email and password.';
+      render();
+      return;
+    }
+    if(loginSubmitBtn){ loginSubmitBtn.disabled = true; loginSubmitBtn.textContent = 'Signing in\u2026'; }
+    try{
+      var res = await sb.auth.signInWithPassword({ email: email, password: pw });
+      if(res.error) throw res.error;
+      var userId = res.data.user.id;
+      // profiles may not be loaded fresh if this is a brand-new account — refetch to be sure
+      await loadAllData();
+      if(LOAD_ERROR){ throw new Error(LOAD_ERROR); }
+      var match = db.settings.admins.find(function(a){ return a.id===userId; });
+      if(!match || !match.active){
+        await sb.auth.signOut();
+        state.admin.loginError = match ? 'This account has been deactivated.' : 'Signed in, but no back-office profile was found for this account.';
+        render();
+        return;
+      }
+      state.admin.loggedIn = true; state.admin.loginError='';
+      state.admin.currentUser = match.displayName || match.username;
+      state.admin.currentUserId = match.id;
+      state.admin.currentUserRole = match.role;
+      if(match.role==='viewer'){
+        state.screen = 'landing'; // viewers have no admin dashboard — straight to the menu to browse & print
+      } else {
+        state.admin.screen = 'dashboard';
+      }
+      setLastAdminEmail(email);
+      render();
+    }catch(e){
+      console.error('Login failed: ' + safeErrText(e));
+      state.admin.loginError = (e && e.message) ? e.message : 'Incorrect email or password.';
+      render();
+      setTimeout(function(){ var p2=document.getElementById('authPassword'); if(p2) p2.focus(); },0);
+    }
+  }
+  if(loginSubmitBtn){ loginSubmitBtn.addEventListener('click', attemptLogin); }
+  if(authEmail){
+    setTimeout(function(){ authEmail.focus(); },0);
+  }
+  if(authPassword){
+    authPassword.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); attemptLogin(); } });
+  }
+  var cancelLogin = document.getElementById('cancelLogin'); if(cancelLogin) cancelLogin.addEventListener('click', function(){ go({screen:'landing'}); });
+
+  /* ---- Admin: nav ---- */
+  app.querySelectorAll('[data-adminnav]').forEach(function(b){
+    b.addEventListener('click', function(){ state.admin.screen = b.getAttribute('data-adminnav'); state.admin.search=''; render(); });
+  });
+  var viewPublic = document.getElementById('viewPublic'); if(viewPublic) viewPublic.addEventListener('click', function(){ go({screen:'landing'}); });
+  var logoutAdmin = document.getElementById('logoutAdmin'); if(logoutAdmin) logoutAdmin.addEventListener('click', function(){ sb.auth.signOut(); state.admin.loggedIn=false; state.admin.currentUserRole=''; go({screen:'landing'}); });
+  var viewerLogout = document.getElementById('viewerLogout'); if(viewerLogout) viewerLogout.addEventListener('click', function(){ sb.auth.signOut(); state.admin.loggedIn=false; state.admin.currentUserRole=''; toast('Logged out'); go({screen:'landing'}); });
+
+  /* ---- Admin: search boxes ---- */
+  var adminSearch = document.getElementById('adminSearch');
+  if(adminSearch){
+    adminSearch.addEventListener('input', function(){ state.admin.search = adminSearch.value; render(); setTimeout(function(){ var el2=document.getElementById('adminSearch'); if(el2){el2.focus(); el2.setSelectionRange(el2.value.length, el2.value.length);} },0); });
+  }
+
+  /* ---- Admin: quick add buttons ---- */
+  app.querySelectorAll('[data-quickadd]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var type = b.getAttribute('data-quickadd');
+      if(type==='menuitem') menuItemFormState = null;
+      setModal({type:type, payload:null});
+    });
+  });
+
+  /* ---- Locations table ---- */
+  app.querySelectorAll('[data-edit-loc]').forEach(function(b){
+    b.addEventListener('click', function(){ var l = db.locations.find(function(x){return x.id===b.getAttribute('data-edit-loc');}); setModal({type:'location', payload:l}); });
+  });
+  app.querySelectorAll('[data-toggle-loc]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var l = db.locations.find(function(x){return x.id===b.getAttribute('data-toggle-loc');});
+      withBusy(async function(){
+        var updated = await sbUpdate('locations', l.id, stamp({active: !l.active}));
+        Object.assign(l, mapLocation(updated));
+        toast(l.name+' is now '+(l.active?'active':'inactive')); render();
+      });
+    });
+  });
+  app.querySelectorAll('[data-delete-loc]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var l = db.locations.find(function(x){return x.id===b.getAttribute('data-delete-loc');});
+      var used = db.menuItems.filter(function(m){ return m.locationIds.indexOf(l.id)!==-1; }).length;
+      confirmAction('Permanently delete "'+l.name+'"? This cannot be undone.'+(used?' It will be removed from '+used+' menu item(s).':''), function(){
+        withBusy(async function(){
+          await sbDelete('locations', l.id); // ON DELETE CASCADE removes it from menu_item_locations for us
+          db.locations = db.locations.filter(function(x){return x.id!==l.id;});
+          db.menuItems.forEach(function(m){ m.locationIds = m.locationIds.filter(function(id){return id!==l.id;}); });
+          state.confirm=null; toast(l.name+' deleted permanently'); render();
+        });
+      });
+    });
+  });
+
+  /* ---- Categories table ---- */
+  app.querySelectorAll('[data-edit-cat]').forEach(function(b){
+    b.addEventListener('click', function(){ var c = db.categories.find(function(x){return x.id===b.getAttribute('data-edit-cat');}); setModal({type:'category', payload:c}); });
+  });
+  app.querySelectorAll('[data-toggle-cat]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var c = db.categories.find(function(x){return x.id===b.getAttribute('data-toggle-cat');});
+      withBusy(async function(){
+        var updated = await sbUpdate('categories', c.id, stamp({active: !c.active}));
+        Object.assign(c, mapCategory(updated));
+        toast(c.name+' is now '+(c.active?'active':'inactive')); render();
+      });
+    });
+  });
+  app.querySelectorAll('[data-delete-cat]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var c = db.categories.find(function(x){return x.id===b.getAttribute('data-delete-cat');});
+      var used = db.menuItems.filter(function(m){return m.categoryId===c.id;}).length;
+      confirmAction('Permanently delete "'+c.name+'"? This cannot be undone.'+(used?' '+used+' menu item(s) will become Uncategorised.':''), function(){
+        withBusy(async function(){
+          await sbDelete('categories', c.id); // menu_items.category_id is ON DELETE SET NULL
+          db.categories = db.categories.filter(function(x){return x.id!==c.id;});
+          db.menuItems.forEach(function(m){ if(m.categoryId===c.id) m.categoryId=null; });
+          state.confirm=null; toast(c.name+' deleted permanently'); render();
+        });
+      });
+    });
+  });
+  app.querySelectorAll('[data-move-cat]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var parts = b.getAttribute('data-move-cat').split(':'); var dir = parts[0], id = parts[1];
+      var sorted = db.categories.slice().sort(function(a,b2){return a.displayOrder-b2.displayOrder;});
+      var idx = sorted.findIndex(function(c){return c.id===id;});
+      var swapIdx = dir==='up' ? idx-1 : idx+1;
+      if(swapIdx<0 || swapIdx>=sorted.length) return;
+      var a = sorted[idx], bItem = sorted[swapIdx];
+      var aOrd = a.displayOrder, bOrd = bItem.displayOrder;
+      withBusy(async function(){
+        await Promise.all([
+          sbUpdate('categories', a.id, {display_order: bOrd}),
+          sbUpdate('categories', bItem.id, {display_order: aOrd})
+        ]);
+        a.displayOrder = bOrd; bItem.displayOrder = aOrd;
+        render();
+      });
+    });
+  });
+  app.querySelectorAll('[data-move-loc]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var parts = b.getAttribute('data-move-loc').split(':'); var dir = parts[0], id = parts[1];
+      var moving = db.locations.find(function(l){ return l.id===id; });
+      if(!moving) return;
+      // Only ever reorder within the same brand group — cross-brand order doesn't mean anything.
+      var siblings = db.locations.filter(function(l){ return (l.brand||'').trim()===(moving.brand||'').trim(); })
+        .slice().sort(function(a,b2){return a.displayOrder-b2.displayOrder;});
+      var idx = siblings.findIndex(function(l){return l.id===id;});
+      var swapIdx = dir==='up' ? idx-1 : idx+1;
+      if(swapIdx<0 || swapIdx>=siblings.length) return;
+      var a = siblings[idx], bItem = siblings[swapIdx];
+      var aOrd = a.displayOrder, bOrd = bItem.displayOrder;
+      withBusy(async function(){
+        await Promise.all([
+          sbUpdate('locations', a.id, {display_order: bOrd}),
+          sbUpdate('locations', bItem.id, {display_order: aOrd})
+        ]);
+        a.displayOrder = bOrd; bItem.displayOrder = aOrd;
+        render();
+      });
+    });
+  });
+
+  /* ---- Ingredients table ---- */
+  app.querySelectorAll('[data-edit-ing]').forEach(function(b){
+    b.addEventListener('click', function(){ var i = db.ingredients.find(function(x){return x.id===b.getAttribute('data-edit-ing');}); setModal({type:'ingredient', payload:i}); });
+  });
+  app.querySelectorAll('[data-toggle-ing]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var i = db.ingredients.find(function(x){return x.id===b.getAttribute('data-toggle-ing');});
+      function doToggle(){
+        withBusy(async function(){
+          var updated = await sbUpdate('ingredients', i.id, stamp({active: !i.active}));
+          Object.assign(i, mapIngredient(updated));
+          toast(i.name+' is now '+(i.active?'active':'inactive')); render();
+        });
+      }
+      if(i.active){
+        var usedBy = db.menuItems.filter(function(m){ return m.active && m.ingredientIds.indexOf(i.id)!==-1; });
+        if(usedBy.length){
+          confirmAction('"'+i.name+'" is still used by '+usedBy.length+' active menu item(s): '+usedBy.map(function(m){return m.name;}).join(', ')+'. Deactivate anyway?', function(){ state.confirm=null; doToggle(); });
+          return;
+        }
+      }
+      doToggle();
+    });
+  });
+  app.querySelectorAll('[data-delete-ing]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var i = db.ingredients.find(function(x){return x.id===b.getAttribute('data-delete-ing');});
+      var usedBy = db.menuItems.filter(function(m){ return m.ingredientIds.indexOf(i.id)!==-1; });
+      confirmAction('Permanently delete "'+i.name+'"? This cannot be undone.'+(usedBy.length?' It will be removed from '+usedBy.length+' menu item(s): '+usedBy.map(function(m){return m.name;}).join(', ')+'. Their allergen info will recalculate automatically.':''), function(){
+        withBusy(async function(){
+          await sbDelete('ingredients', i.id); // ON DELETE CASCADE removes it from menu_item_ingredients for us
+          db.ingredients = db.ingredients.filter(function(x){return x.id!==i.id;});
+          db.menuItems.forEach(function(m){ m.ingredientIds = m.ingredientIds.filter(function(id){return id!==i.id;}); });
+          state.confirm=null; toast(i.name+' deleted permanently'); render();
+        });
+      });
+    });
+  });
+
+  /* ---- Menu items table ---- */
+  app.querySelectorAll('[data-edit-mi]').forEach(function(b){
+    b.addEventListener('click', function(){ var m = db.menuItems.find(function(x){return x.id===b.getAttribute('data-edit-mi');}); menuItemFormState=null; setModal({type:'menuitem', payload:m}); });
+  });
+  app.querySelectorAll('[data-toggle-mi]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var m = db.menuItems.find(function(x){return x.id===b.getAttribute('data-toggle-mi');});
+      withBusy(async function(){
+        var updated = await sbUpdate('menu_items', m.id, stamp({active: !m.active}));
+        m.active = updated.active; m.updatedBy = resolveUpdatedBy(updated.updated_by); m.updatedAt = updated.updated_at;
+        toast(m.name+' is now '+(m.active?'active':'inactive')); render();
+      });
+    });
+  });
+  app.querySelectorAll('[data-delete-mi]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var m = db.menuItems.find(function(x){return x.id===b.getAttribute('data-delete-mi');});
+      confirmAction('Permanently delete "'+m.name+'"? This cannot be undone.', function(){
+        withBusy(async function(){
+          await sbDelete('menu_items', m.id);
+          db.menuItems = db.menuItems.filter(function(x){return x.id!==m.id;});
+          state.confirm=null; toast(m.name+' deleted permanently'); render();
+        });
+      });
+    });
+  });
+
+  /* ---- Modal: overlay click to close ---- */
+  var modalOverlay = document.getElementById('modalOverlay');
+  if(modalOverlay){ modalOverlay.addEventListener('click', function(e){ if(e.target===modalOverlay){ menuItemFormState=null; closeModal(); } }); }
+  var cancelModalBtn = document.getElementById('cancelModal'); if(cancelModalBtn) cancelModalBtn.addEventListener('click', function(){ menuItemFormState=null; closeModal(); });
+
+  /* ---- Location form ---- */
+  var locForm = document.getElementById('locForm');
+  if(locForm){
+    function submitLocForm(){
+      var name = document.getElementById('locName').value.trim();
+      if(!name){ toast('Location name is required'); return; }
+      var payload = state.modal.payload;
+      var brand = document.getElementById('locBrand').value.trim();
+      var row = stamp({
+        name:name,
+        brand:brand,
+        address:document.getElementById('locAddr').value.trim(),
+        description:document.getElementById('locDesc').value.trim(),
+        active:document.getElementById('locActive').checked
+      });
+      if(!payload){
+        var sameBrand = db.locations.filter(function(l){ return (l.brand||'').trim()===brand; });
+        row.display_order = sameBrand.reduce(function(max,l){ return Math.max(max, l.displayOrder||0); }, 0) + 1;
+      }
+      withBusy(async function(){
+        if(payload){
+          var updated = await sbUpdate('locations', payload.id, row);
+          Object.assign(payload, mapLocation(updated));
+          toast('Location updated');
+        } else {
+          var created = await sbInsert('locations', row);
+          db.locations.push(mapLocation(created));
+          toast('Location added');
+        }
+        closeModal();
+      });
+    }
+    var submitLocBtn = document.getElementById('submitLocForm'); if(submitLocBtn) submitLocBtn.addEventListener('click', submitLocForm);
+    var locNameInput = document.getElementById('locName');
+    if(locNameInput) locNameInput.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); submitLocForm(); } });
+    var deleteLoc = document.getElementById('deleteLoc');
+    if(deleteLoc) deleteLoc.addEventListener('click', function(){
+      var payload = state.modal.payload;
+      confirmAction('Deactivate "'+payload.name+'"? It will no longer appear on the public site. (Records are archived, not permanently deleted, to keep menu item links intact. Use "Delete permanently" in the table if you want to remove it entirely.)', function(){
+        withBusy(async function(){
+          var updated = await sbUpdate('locations', payload.id, stamp({active:false}));
+          Object.assign(payload, mapLocation(updated));
+          state.confirm=null; closeModal(); toast('Location deactivated');
+        });
+      });
+    });
+  }
+
+  /* ---- Category form ---- */
+  var catForm = document.getElementById('catForm');
+  if(catForm){
+    function submitCatForm(){
+      var name = document.getElementById('catName').value.trim();
+      if(!name){ toast('Category name is required'); return; }
+      var payload = state.modal.payload;
+      var row = stamp({ name:name, description:document.getElementById('catDesc').value.trim(), active:document.getElementById('catActive').checked });
+      withBusy(async function(){
+        if(payload){
+          var updated = await sbUpdate('categories', payload.id, row);
+          Object.assign(payload, mapCategory(updated));
+          toast('Category updated');
+        } else {
+          var maxOrder = db.categories.reduce(function(m,c){return Math.max(m,c.displayOrder);},0);
+          row.display_order = maxOrder+1;
+          var created = await sbInsert('categories', row);
+          db.categories.push(mapCategory(created));
+          toast('Category added');
+        }
+        closeModal();
+      });
+    }
+    var submitCatBtn = document.getElementById('submitCatForm'); if(submitCatBtn) submitCatBtn.addEventListener('click', submitCatForm);
+    var catNameInput = document.getElementById('catName');
+    if(catNameInput) catNameInput.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); submitCatForm(); } });
+    var deleteCat = document.getElementById('deleteCat');
+    if(deleteCat) deleteCat.addEventListener('click', function(){
+      var payload = state.modal.payload;
+      var used = db.menuItems.filter(function(m){return m.categoryId===payload.id;}).length;
+      confirmAction('Deactivate "'+payload.name+'"?'+(used?' '+used+' menu item(s) will show as Uncategorised on the public menu.':'')+' Use "Delete permanently" in the table if you want to remove it entirely.', function(){
+        withBusy(async function(){
+          var updated = await sbUpdate('categories', payload.id, stamp({active:false}));
+          Object.assign(payload, mapCategory(updated));
+          state.confirm=null; closeModal(); toast('Category deactivated');
+        });
+      });
+    });
+  }
+
+  /* ---- Ingredient form ---- */
+  app.querySelectorAll('.status-toggle input[type=radio]').forEach(function(r){
+    r.addEventListener('change', function(){
+      var group = r.closest('.status-toggle');
+      group.querySelectorAll('label').forEach(function(l){ l.classList.remove('sel','sel-may','sel-contains'); });
+      var lbl = r.closest('label');
+      lbl.classList.add('sel');
+      if(r.value==='may') lbl.classList.add('sel-may');
+      if(r.value==='contains') lbl.classList.add('sel-contains');
+    });
+  });
+  var ingForm = document.getElementById('ingForm');
+  if(ingForm){
+    function submitIngForm(){
+      var name = document.getElementById('ingName').value.trim();
+      if(!name){ toast('Ingredient name is required'); return; }
+      var allergens = [], mayContain = [];
+      ALLERGENS.forEach(function(a){
+        var checked = app.querySelector('input[name="alg_'+a.key+'"]:checked');
+        var val = checked ? checked.value : 'none';
+        if(val==='contains') allergens.push(a.key);
+        else if(val==='may') mayContain.push(a.key);
+      });
+      var calRaw = document.getElementById('ingCalories').value.trim();
+      var calories = calRaw==='' ? null : Math.max(0, Math.round(Number(calRaw)));
+      if(calRaw!=='' && isNaN(calories)){ toast('Calories must be a number'); return; }
+      var payload = state.modal.payload;
+      var row = stamp({
+        name:name, allergens:allergens, may_contain:mayContain, calories:calories,
+        brand_name: document.getElementById('ingBrand').value.trim(),
+        supplier: document.getElementById('ingSupplier').value.trim(),
+        vegetarian: document.getElementById('ingVegetarian').checked,
+        halal: document.getElementById('ingHalal').checked,
+        description:document.getElementById('ingNotes').value.trim(), active:document.getElementById('ingActive').checked
+      });
+      withBusy(async function(){
+        if(payload){
+          var updated = await sbUpdate('ingredients', payload.id, row);
+          Object.assign(payload, mapIngredient(updated));
+          toast('Ingredient updated');
+        } else {
+          var created = await sbInsert('ingredients', row);
+          db.ingredients.push(mapIngredient(created));
+          toast('Ingredient added');
+        }
+        closeModal();
+      });
+    }
+    var submitIngBtn = document.getElementById('submitIngForm'); if(submitIngBtn) submitIngBtn.addEventListener('click', submitIngForm);
+    var ingNameInput = document.getElementById('ingName');
+    if(ingNameInput) ingNameInput.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); submitIngForm(); } });
+    var deleteIng = document.getElementById('deleteIng');
+    if(deleteIng) deleteIng.addEventListener('click', function(){
+      var payload = state.modal.payload;
+      var usedBy = db.menuItems.filter(function(m){return m.active && m.ingredientIds.indexOf(payload.id)!==-1;});
+      confirmAction('Deactivate "'+payload.name+'"?'+(usedBy.length?' It is still used by: '+usedBy.map(function(m){return m.name;}).join(', ')+'.':'')+' Use "Delete permanently" in the table if you want to remove it entirely.', function(){
+        withBusy(async function(){
+          var updated = await sbUpdate('ingredients', payload.id, stamp({active:false}));
+          Object.assign(payload, mapIngredient(updated));
+          state.confirm=null; closeModal(); toast('Ingredient deactivated');
+        });
+      });
+    });
+  }
+
+  /* ---- Menu item form ---- */
+  var miForm = document.getElementById('miForm');
+  if(miForm){
+    var nameI = document.getElementById('miName'); if(nameI) nameI.addEventListener('input', function(){ menuItemFormState.name = nameI.value; });
+    var descI = document.getElementById('miDesc'); if(descI) descI.addEventListener('input', function(){ menuItemFormState.description = descI.value; });
+    var catI = document.getElementById('miCat'); if(catI) catI.addEventListener('change', function(){ menuItemFormState.categoryId = catI.value; });
+    var activeI = document.getElementById('miActive'); if(activeI) activeI.addEventListener('change', function(){ menuItemFormState.active = activeI.checked; });
+    app.querySelectorAll('[data-loc]').forEach(function(cb){
+      if(!cb.matches('input')) return;
+      cb.addEventListener('change', function(){
+        var lid = cb.getAttribute('data-loc');
+        var idx = menuItemFormState.locationIds.indexOf(lid);
+        if(cb.checked && idx===-1) menuItemFormState.locationIds.push(lid);
+        if(!cb.checked && idx!==-1) menuItemFormState.locationIds.splice(idx,1);
+        render();
+      });
+    });
+    var ingSearchInput = document.getElementById('ingSearchInput');
+    if(ingSearchInput){
+      ingSearchInput.addEventListener('input', function(){ menuItemFormState.ingSearch = ingSearchInput.value; render();
+        setTimeout(function(){ var el3=document.getElementById('ingSearchInput'); if(el3){ el3.focus(); el3.setSelectionRange(el3.value.length, el3.value.length);} },0);
+      });
+    }
+    app.querySelectorAll('[data-add-ing]').forEach(function(b){
+      b.addEventListener('click', function(){ menuItemFormState.ingredientIds.push(b.getAttribute('data-add-ing')); render(); });
+    });
+    app.querySelectorAll('[data-remove-ing]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var id = b.getAttribute('data-remove-ing');
+        var idx = menuItemFormState.ingredientIds.indexOf(id);
+        if(idx!==-1) menuItemFormState.ingredientIds.splice(idx,1);
+        render();
+      });
+    });
+    app.querySelectorAll('[data-move-ing]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var parts = b.getAttribute('data-move-ing').split(':'); var dir=parts[0], id=parts[1];
+        var idx = menuItemFormState.ingredientIds.indexOf(id);
+        var swap = dir==='up'?idx-1:idx+1;
+        if(swap<0 || swap>=menuItemFormState.ingredientIds.length) return;
+        var tmp = menuItemFormState.ingredientIds[idx];
+        menuItemFormState.ingredientIds[idx] = menuItemFormState.ingredientIds[swap];
+        menuItemFormState.ingredientIds[swap] = tmp;
+        render();
+      });
+    });
+    function submitMiForm(){
+      var name = menuItemFormState.name.trim();
+      if(!name){ toast('Menu item name is required'); return; }
+      var locationIds = menuItemFormState.locationIds.slice();
+      var ingredientIds = menuItemFormState.ingredientIds.slice();
+      var row = stamp({
+        name:name, description:menuItemFormState.description.trim(), category_id: menuItemFormState.categoryId || null,
+        active: menuItemFormState.active
+      });
+      var noIngredientsWarning = !ingredientIds.length;
+      var payload = state.modal.payload;
+      withBusy(async function(){
+        var miRow = payload ? await sbUpdate('menu_items', payload.id, row) : await sbInsert('menu_items', row);
+        var miId = miRow.id;
+        // Resync both link tables: clear existing links for this item, then write the current set fresh.
+        await Promise.all([
+          sb.from('menu_item_locations').delete().eq('menu_item_id', miId),
+          sb.from('menu_item_ingredients').delete().eq('menu_item_id', miId)
+        ]);
+        var inserts = [];
+        if(locationIds.length){
+          inserts.push(sb.from('menu_item_locations').insert(locationIds.map(function(lid){ return {menu_item_id: miId, location_id: lid}; })));
+        }
+        if(ingredientIds.length){
+          inserts.push(sb.from('menu_item_ingredients').insert(ingredientIds.map(function(iid, idx){ return {menu_item_id: miId, ingredient_id: iid, sort_order: idx}; })));
+        }
+        var insertResults = await Promise.all(inserts);
+        insertResults.forEach(function(r){ if(r.error) throw r.error; });
+
+        var mapped = mapMenuItem(miRow, [], []);
+        mapped.locationIds = locationIds;
+        mapped.ingredientIds = ingredientIds;
+        if(payload){ Object.assign(payload, mapped); toast('Menu item updated'); }
+        else { db.menuItems.push(mapped); toast(noIngredientsWarning ? 'Saved — note: this item has no ingredients connected' : 'Menu item added'); }
+        menuItemFormState=null; closeModal();
+      });
+    }
+    var submitMiBtn = document.getElementById('submitMiForm'); if(submitMiBtn) submitMiBtn.addEventListener('click', submitMiForm);
+    if(nameI) nameI.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); submitMiForm(); } });
+    var deleteMi = document.getElementById('deleteMi');
+    if(deleteMi) deleteMi.addEventListener('click', function(){
+      var payload = state.modal.payload;
+      confirmAction('Deactivate "'+payload.name+'"? It will be removed from all public menus but its record is kept. Use "Delete permanently" in the table if you want to remove it entirely.', function(){
+        withBusy(async function(){
+          var updated = await sbUpdate('menu_items', payload.id, stamp({active:false}));
+          payload.active = updated.active; payload.updatedBy = resolveUpdatedBy(updated.updated_by); payload.updatedAt = updated.updated_at;
+          state.confirm=null; menuItemFormState=null; closeModal(); toast('Menu item deactivated');
+        });
+      });
+    });
+  }
+
+  /* ---- Team: account form (edit only — accounts are created via the Supabase dashboard) ---- */
+  var acctForm = document.getElementById('acctForm');
+  if(acctForm){
+    function submitAcctForm(){
+      var payload = state.modal.payload;
+      if(!payload) return;
+      var isSelf = payload.id === state.admin.currentUserId;
+      var displayName = document.getElementById('acctDisplayName').value.trim();
+      var activeEl = document.getElementById('acctActive');
+      var roleEl = app.querySelector('input[name="acctRole"]:checked');
+      var row = { display_name: displayName };
+      if(!isSelf){
+        if(roleEl) row.role = roleEl.value;
+        if(activeEl) row.active = activeEl.checked;
+      }
+      withBusy(async function(){
+        var updated = await sbUpdate('profiles', payload.id, row);
+        Object.assign(payload, mapProfile(updated));
+        profileNameById[payload.id] = updated.display_name || updated.email;
+        toast('Team member updated');
+        closeModal();
+      });
+    }
+    var submitAcctBtn = document.getElementById('submitAcctForm'); if(submitAcctBtn) submitAcctBtn.addEventListener('click', submitAcctForm);
+  }
+  app.querySelectorAll('[data-edit-acct]').forEach(function(b){
+    b.addEventListener('click', function(){ var a = db.settings.admins.find(function(x){return x.id===b.getAttribute('data-edit-acct');}); setModal({type:'account', payload:a}); });
+  });
+  app.querySelectorAll('[data-toggle-acct]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var a = db.settings.admins.find(function(x){return x.id===b.getAttribute('data-toggle-acct');});
+      if(a.id === state.admin.currentUserId){ toast('You can\u2019t deactivate your own account'); return; }
+      withBusy(async function(){
+        var updated = await sbUpdate('profiles', a.id, { active: !a.active });
+        Object.assign(a, mapProfile(updated));
+        toast(a.username+' is now '+(a.active?'active':'inactive')); render();
+      });
+    });
+  });
+
+  /* ---- Confirm modal ---- */
+  var confirmNo = document.getElementById('confirmNo'); if(confirmNo) confirmNo.addEventListener('click', function(){ state.confirm=null; render(); });
+  var confirmYes = document.getElementById('confirmYes'); if(confirmYes) confirmYes.addEventListener('click', function(){ if(state.confirm && state.confirm.onConfirm) state.confirm.onConfirm(); });
+
+  /* ---- Settings screen ---- */
+  var showCaloriesToggle = document.getElementById('showCaloriesToggle');
+  if(showCaloriesToggle) showCaloriesToggle.addEventListener('change', function(){
+    var next = showCaloriesToggle.checked;
+    withBusy(async function(){
+      var res = await sb.from('app_settings').update({show_calories: next, updated_at: new Date().toISOString()}).eq('id', true).select().single();
+      if(res.error) throw res.error;
+      db.settings.showCalories = !!res.data.show_calories;
+      toast('Calories are now '+(db.settings.showCalories?'visible':'hidden')+' to customers'); render();
+    });
+  });
+  var resetDataBtn = document.getElementById('resetDataBtn');
+  if(resetDataBtn) resetDataBtn.addEventListener('click', function(){
+    confirmAction('Clear all locations, categories, ingredients and menu items from the live database, for everyone? Team accounts are kept. This cannot be undone \u2014 export a backup first if you want to keep a copy.', function(){
+      withBusy(async function(){
+        // Delete in FK-safe order: junction tables first, then the tables they reference.
+        await sb.from('menu_item_locations').delete().neq('menu_item_id', '00000000-0000-0000-0000-000000000000');
+        await sb.from('menu_item_ingredients').delete().neq('menu_item_id', '00000000-0000-0000-0000-000000000000');
+        await sb.from('menu_items').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+        await sb.from('ingredients').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+        await sb.from('categories').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+        await sb.from('locations').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+        db.locations = []; db.categories = []; db.ingredients = []; db.menuItems = [];
+        state.confirm=null; toast('All menu data cleared'); render();
+      });
+    });
+  });
+  var exportJson = document.getElementById('exportJson');
+  if(exportJson) exportJson.addEventListener('click', function(){
+    var blob = new Blob([JSON.stringify(db, null, 2)], {type:'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'allergen-guide-data-'+(new Date().toISOString().slice(0,10))+'.json';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast('Export downloaded');
+  });
+}
+
+function renderMenuOnly(){ render(); }
+
+function renderLoadingScreen(msg){
+  var app = document.getElementById('app');
+  app.innerHTML = '<div class="login-shell"><div class="login-card">'+
+    '<div class="brand-mark" style="margin:0 auto 14px;">'+BRAND_SVG+'</div>'+
+    '<h1>'+esc(APP_TITLE)+'</h1>'+
+    '<p>'+esc(msg)+'</p>'+
+  '</div></div>';
+}
+function renderLoadErrorScreen(){
+  var app = document.getElementById('app');
+  app.innerHTML = '<div class="login-shell"><div class="login-card">'+
+    '<div class="brand-mark" style="margin:0 auto 14px;">'+BRAND_SVG+'</div>'+
+    '<h1>Can\u2019t connect</h1>'+
+    '<p>We couldn\u2019t reach the database. '+esc(LOAD_ERROR||'')+'</p>'+
+    '<button class="btn btn-primary btn-block" id="retryLoad">Try again</button>'+
+  '</div></div>';
+  var r = document.getElementById('retryLoad'); if(r) r.addEventListener('click', boot);
+}
+
+async function boot(){
+  renderLoadingScreen('Loading the allergen guide\u2026');
+  await loadAllData();
+  if(LOAD_ERROR){ renderLoadErrorScreen(); return; }
+  try{
+    var sessRes = await sb.auth.getSession();
+    var session = sessRes && sessRes.data && sessRes.data.session;
+    if(session && session.user){
+      var prof = db.settings.admins.find(function(a){ return a.id===session.user.id; });
+      if(prof && prof.active){
+        state.admin.loggedIn = true;
+        state.admin.currentUser = prof.displayName;
+        state.admin.currentUserId = prof.id;
+        state.admin.currentUserRole = prof.role;
+        if(prof.role==='viewer'){ state.screen = 'landing'; }
+      } else {
+        await sb.auth.signOut(); // stale/deactivated account — don't leave them half-logged-in
+      }
+    }
+  }catch(e){ console.error('Session restore failed: ' + safeErrText(e)); }
+  render();
+}
+boot();
+
+})();
+</script>
+</body>
+</html>
